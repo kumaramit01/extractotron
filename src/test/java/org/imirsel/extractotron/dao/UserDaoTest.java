@@ -1,7 +1,6 @@
 package org.imirsel.extractotron.dao;
 
 import org.imirsel.extractotron.Constants;
-import org.imirsel.extractotron.model.Address;
 import org.imirsel.extractotron.model.Role;
 import org.imirsel.extractotron.model.User;
 import org.compass.core.CompassCallbackWithoutResult;
@@ -59,15 +58,15 @@ public class UserDaoTest extends BaseDaoTestCase {
     public void testUpdateUser() throws Exception {
         User user = dao.get(-1L);
 
-        Address address = user.getAddress();
-        address.setAddress("new address");
+        //Address address = user.getAddress();
+       // address.setAddress("new address");
 
         dao.saveUser(user);
         flush();
 
         user = dao.get(-1L);
-        assertEquals(address, user.getAddress());
-        assertEquals("new address", user.getAddress().getAddress());
+        //assertEquals(address, user.getAddress());
+        //assertEquals("new address", user.getAddress().getAddress());
 
         // verify that violation occurs when adding new user with same username
         user.setId(null);
@@ -112,12 +111,6 @@ public class UserDaoTest extends BaseDaoTestCase {
         user.setPassword("testpass");
         user.setFirstName("Test");
         user.setLastName("Last");
-        Address address = new Address();
-        address.setCity("Denver");
-        address.setProvince("CO");
-        address.setCountry("USA");
-        address.setPostalCode("80210");
-        user.setAddress(address);
         user.setEmail("testuser@appfuse.org");
       
         Role role = rdao.getRoleByName(Constants.USER_ROLE);
