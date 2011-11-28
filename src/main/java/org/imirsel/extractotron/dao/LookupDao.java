@@ -1,6 +1,7 @@
 package org.imirsel.extractotron.dao;
 
 import org.imirsel.extractotron.model.Role;
+import org.imirsel.extractotron.model.SongCollection;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface LookupDao {
      * @return populated list of roles
      */
     List<Role> getRoles();
+    List<SongCollection> getSongCollections();
 }

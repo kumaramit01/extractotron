@@ -48,6 +48,18 @@ public final class Constants {
      * The request scope attribute that holds the user list
      */
     public static final String USER_LIST = "userList";
+    
+    /**
+     * The requesr scope attribute that holds the collection list
+     */
+    public static final String COLLECTION_LIST = "collectionList";
+    
+    public static final String COLLECTION = "collection";
+    
+    public static final String PROJECT_LIST = "projectList";
+    
+    public static final String PROJECT = "project";
+
 
     /**
      * The request scope attribute for indicating a newly-registered user

@@ -1,10 +1,14 @@
 package org.imirsel.extractotron.service;
 
 import org.imirsel.extractotron.dao.UserDao;
+import org.imirsel.extractotron.dao.hibernate.ProjectNotFoundException;
+import org.imirsel.extractotron.model.Project;
 import org.imirsel.extractotron.model.User;
+import org.imirsel.extractotron.webapp.controller.ProjectExistsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -64,4 +68,12 @@ public interface UserManager extends GenericManager<User, Long> {
      * @return a list of matches, or all if no searchTerm.
      */
     List<User> search(String searchTerm);
+
+	Set<Project> getProjectsCurrentUser();
+
+	Project getProjectCurrentUser(Long id) throws ProjectNotFoundException;
+
+	void saveProject(Project project) throws ProjectExistsException;
+
+	void removeProject(String string);
 }

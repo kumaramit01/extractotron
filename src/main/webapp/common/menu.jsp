@@ -6,6 +6,9 @@
     <c:if test="${empty pageContext.request.remoteUser}"><li><a href="<c:url value="/login"/>" class="current"><fmt:message key="login.title"/></a></li></c:if>
     <menu:displayMenu name="MainMenu"/>
     <menu:displayMenu name="UserMenu"/>
+    <menu:displayMenu name="ProjectMenu"/>
+    <menu:displayMenu name="CollectionMenu"/>
+    <menu:displayMenu name="ExtractorMenu"/>
     <menu:displayMenu name="AdminMenu"/>
     <menu:displayMenu name="Logout"/>
 </ul>

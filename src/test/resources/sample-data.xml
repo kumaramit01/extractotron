@@ -6,14 +6,7 @@
         <column>password</column>
         <column>first_name</column>
         <column>last_name</column>
-        <column>address</column>
-        <column>city</column>
-        <column>country</column>
         <column>email</column>
-        <column>phone_number</column>
-        <column>postal_code</column>
-        <column>province</column>
-        <column>website</column>
         <column>password_hint</column>
         <column>version</column>
         <column>account_enabled</column>
@@ -22,18 +15,11 @@
         <column>credentials_expired</column>
         <row>
             <value description="id">-1</value>
-            <value description="username">user</value>
+            <value description="username">amit</value>
             <value description="password">12dea96fec20593566ab75692c9949596833adc9</value>
-            <value description="first_name">Tomcat</value>
-            <value description="last_name">User</value>
-            <value description="address"></value>
-            <value description="city">Denver</value>
-            <value description="country">US</value>
-            <value description="email">matt_raible@yahoo.com</value>
-            <value description="phone_number"></value>
-            <value description="postal_code">80210</value>
-            <value description="province">CO</value>
-            <value description="website">http://tomcat.apache.org</value>
+            <value description="first_name">Amit</value>
+            <value description="last_name">Kumar</value>
+            <value description="email">kumaramit01@gmail.com</value>
             <value description="password_hint"><![CDATA[A male kitty.]]></value>
             <value description="version">1</value>
             <value description="account_enabled">1</value>
@@ -45,16 +31,9 @@
             <value description="id">-2</value>
             <value description="username">admin</value>
             <value description="password">d033e22ae348aeb5660fc2140aec35850c4da997</value>
-            <value description="first_name">Matt</value>
-            <value description="last_name">Raible</value>
-            <value description="address"></value>
-            <value description="city">Denver</value>
-            <value description="country">US</value>
-            <value description="email">matt@raibledesigns.com</value>
-            <value description="phone_number"></value>
-            <value description="postal_code">80210</value>
-            <value description="province">CO</value>
-            <value description="website">http://raibledesigns.com</value>
+            <value description="first_name">Amit</value>
+            <value description="last_name">Kumar</value>
+            <value description="email">kumaramit.extra@gmail.com</value>
             <value description="password_hint"><![CDATA[Not a female kitty.]]></value>
             <value description="version">1</value>
             <value description="account_enabled">1</value>

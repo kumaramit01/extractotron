@@ -1,7 +1,6 @@
 package org.imirsel.extractotron.webapp.controller;
 
 import org.imirsel.extractotron.Constants;
-import org.imirsel.extractotron.model.Address;
 import org.imirsel.extractotron.model.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,21 +29,15 @@ public class SignupControllerTest extends BaseControllerTestCase {
     public void testSignupUser() throws Exception {
         MockHttpServletRequest request = newPost("/signup.html");
 
-        Address address = new Address();
-        address.setCity("Denver");
-        address.setProvince("Colorado");
-        address.setCountry("USA");
-        address.setPostalCode("80210");
-
+     
         User user = new User();
-        user.setAddress(address);
-
+     
         user.setUsername("self-registered");
         user.setPassword("Password1");
         user.setConfirmPassword("Password1");
         user.setFirstName("First");
         user.setLastName("Last");
-        user.setEmail("self-registered@raibledesigns.com");
+        user.setEmail("kumaramit.extra@gmail.com");
         user.setPasswordHint("Password is one with you.");
 
         HttpServletResponse response = new MockHttpServletResponse();

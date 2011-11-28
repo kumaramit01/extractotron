@@ -51,9 +51,9 @@ public class User extends BaseObject implements Serializable, UserDetails {
     private String firstName;                   // required
     private String lastName;                    // required
     private String email;                       // required; unique
-    private Address address = new Address();
     private Integer version;
     private Set<Role> roles = new HashSet<Role>();
+    private Set<Project> projects = new HashSet<Project>();
     private boolean enabled;
     private boolean accountExpired;
     private boolean accountLocked;
@@ -133,11 +133,7 @@ public class User extends BaseObject implements Serializable, UserDetails {
         return firstName + ' ' + lastName;
     }
 
-    @Embedded
-    @SearchableComponent
-    public Address getAddress() {
-        return address;
-    }
+   
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -148,6 +144,17 @@ public class User extends BaseObject implements Serializable, UserDetails {
     public Set<Role> getRoles() {
         return roles;
     }
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_project",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = @JoinColumn(name = "project_id")
+    )
+    public Set<Project> getProjects() {
+        return projects;
+    }
+    
 
     /**
      * Convert user roles to LabelValue objects for convenience.
@@ -175,6 +182,15 @@ public class User extends BaseObject implements Serializable, UserDetails {
      */
     public void addRole(Role role) {
         getRoles().add(role);
+    }
+    
+    /**
+     * Adds a project for the user
+     *
+     * @param project the fully instantiated project
+     */
+    public void addProject(Project project) {
+        getProjects().add(project);
     }
 
     /**
@@ -273,15 +289,16 @@ public class User extends BaseObject implements Serializable, UserDetails {
     }
 
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
-    public void setVersion(Integer version) {
+    public void setProjects(Set<Project> projects) {
+		this.projects = projects;
+	}
+
+	public void setVersion(Integer version) {
         this.version = version;
     }
 

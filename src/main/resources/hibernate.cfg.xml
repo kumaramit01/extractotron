@@ -8,5 +8,8 @@
     <session-factory>
         <mapping class="org.imirsel.extractotron.model.User"/>
         <mapping class="org.imirsel.extractotron.model.Role"/>
+        <mapping class="org.imirsel.extractotron.model.Song"/>
+        <mapping class="org.imirsel.extractotron.model.Project"/>
+        <mapping class="org.imirsel.extractotron.model.SongCollection"/>
     </session-factory>
 </hibernate-configuration>

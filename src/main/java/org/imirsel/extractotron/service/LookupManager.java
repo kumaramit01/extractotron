@@ -15,4 +15,6 @@ public interface LookupManager {
      * @return List of LabelValue objects
      */
     List<LabelValue> getAllRoles();
+    
+    List<LabelValue> getAllCollections();
 }

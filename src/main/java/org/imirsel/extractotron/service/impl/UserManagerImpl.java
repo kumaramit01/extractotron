@@ -1,19 +1,26 @@
 package org.imirsel.extractotron.service.impl;
 
+import org.imirsel.extractotron.dao.ProjectDao;
 import org.imirsel.extractotron.dao.UserDao;
+import org.imirsel.extractotron.dao.hibernate.ProjectNotFoundException;
+import org.imirsel.extractotron.model.Project;
 import org.imirsel.extractotron.model.User;
 import org.imirsel.extractotron.service.UserExistsException;
 import org.imirsel.extractotron.service.UserManager;
 import org.imirsel.extractotron.service.UserService;
+import org.imirsel.extractotron.webapp.controller.ProjectExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.jws.WebService;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -25,6 +32,7 @@ import java.util.List;
 public class UserManagerImpl extends GenericManagerImpl<User, Long> implements UserManager, UserService {
     private PasswordEncoder passwordEncoder;
     private UserDao userDao;
+    private ProjectDao projectDao;
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -35,6 +43,11 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
     public void setUserDao(UserDao userDao) {
         this.dao = userDao;
         this.userDao = userDao;
+    }
+    
+    @Autowired
+    public void setProjectDao(ProjectDao projectDao) {
+        this.projectDao = projectDao;
     }
 
     /**
@@ -126,4 +139,61 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
     public List<User> search(String searchTerm) {
         return super.search(searchTerm, User.class);
     }
+
+	public Set<Project> getProjectsCurrentUser() {
+		Authentication authn =SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authn.getPrincipal();
+		User user1=getUserByUsername(user.getUsername());
+		return user1.getProjects();
+	}
+
+	public Project getProjectCurrentUser(Long id) throws ProjectNotFoundException {
+		Set<Project> set=getProjectsCurrentUser();
+		Project project = null;
+		boolean found = false;
+		for(Project p:set){
+			System.out.println("ID =>"+ p.getId());
+			if(p.getId().longValue() == id.longValue()){
+			 project = p;
+			 found = true;
+			 break;
+			}
+		}
+		if(found){
+			return project;
+		}else{
+			throw new ProjectNotFoundException(" project with id " + id);
+		}
+	}
+
+	public void saveProject(Project project) throws ProjectExistsException {
+		try{
+		   projectDao.saveProject(project);
+		} catch (DataIntegrityViolationException e) {
+            //e.printStackTrace();
+            log.warn(e.getMessage());
+            throw new ProjectExistsException("Project '" + project.getName() + "' already exists!");
+        } catch (JpaSystemException e) { // needed for JPA
+            //e.printStackTrace();
+            log.warn(e.getMessage());
+            throw new ProjectExistsException("Project '" + project.getName() + "' already exists!");
+        }
+        Authentication authn =SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authn.getPrincipal();
+		User user1=getUserByUsername(user.getUsername());
+		user1.getProjects().add(project);
+		userDao.save(user1);
+	
+	}
+
+	public void removeProject(String projectId) {
+		Project project=projectDao.get(new Long(projectId));
+		Authentication authn =SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authn.getPrincipal();
+		User user1=getUserByUsername(user.getUsername());
+		user1.getProjects().remove(project);
+		userDao.save(user1);
+		projectDao.remove(project.getId());
+		
+	}
 }

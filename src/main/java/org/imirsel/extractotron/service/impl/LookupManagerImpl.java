@@ -3,6 +3,7 @@ package org.imirsel.extractotron.service.impl;
 import org.imirsel.extractotron.dao.LookupDao;
 import org.imirsel.extractotron.model.LabelValue;
 import org.imirsel.extractotron.model.Role;
+import org.imirsel.extractotron.model.SongCollection;
 import org.imirsel.extractotron.service.LookupManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,4 +34,13 @@ public class LookupManagerImpl implements LookupManager {
 
         return list;
     }
+
+	public List<LabelValue> getAllCollections() {
+		List<SongCollection> collections = dao.getSongCollections();
+		List<LabelValue> list = new ArrayList<LabelValue>();
+		for(SongCollection sc:collections){
+			list.add(new LabelValue(sc.getName(),sc.getName()));
+		}
+		return list;
+	}
 }

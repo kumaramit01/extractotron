@@ -99,47 +99,9 @@
                 <form:errors path="email" cssClass="fieldError"/>
                 <form:input path="email" id="email" cssClass="text medium" cssErrorClass="text medium error"/>
             </div>
-            <div>
-                <appfuse:label styleClass="desc" key="user.phoneNumber"/>
-                <form:errors path="phoneNumber" cssClass="fieldError"/>
-                <form:input path="phoneNumber" id="phoneNumber" cssClass="text medium" cssErrorClass="text medium error"/>
-            </div>
-        </div>
+      </div>
     </li>
-    <li>
-        <appfuse:label styleClass="desc" key="user.website"/>
-        <form:errors path="website" cssClass="fieldError"/>
-        <form:input path="website" id="website" cssClass="text large" cssErrorClass="text large error"/>
-    </li>
-    <li>
-        <label class="desc"><fmt:message key="user.address.address"/></label>
-        <div class="group">
-            <div>
-                <form:input path="address.address" id="address.address" cssClass="text large" cssErrorClass="text large error"/>
-                <form:errors path="address.address" cssClass="fieldError"/>
-                <p><appfuse:label key="user.address.address"/></p>
-            </div>
-            <div class="left">
-                <form:input path="address.city" id="address.city" cssClass="text medium" cssErrorClass="text medium error"/>
-                <form:errors path="address.city" cssClass="fieldError"/>
-                <p><appfuse:label key="user.address.city"/></p>
-            </div>
-            <div>
-                <form:input path="address.province" id="address.province" cssClass="text state" cssErrorClass="text state error"/>
-                <form:errors path="address.province" cssClass="fieldError"/>
-                <p><appfuse:label key="user.address.province"/></p>
-            </div>
-            <div class="left">
-                <form:input path="address.postalCode" id="address.postalCode" cssClass="text medium" cssErrorClass="text medium error"/>
-                <form:errors path="address.postalCode" cssClass="fieldError"/>
-                <p><appfuse:label key="user.address.postalCode"/></p>
-            </div>
-            <div>
-                <appfuse:country name="address.country" prompt="" default="${user.address.country}"/>
-                <p><appfuse:label key="user.address.country"/></p>
-            </div>
-        </div>
-    </li>
+  
 <c:choose>
     <c:when test="${param.from == 'list' or param.method == 'Add'}">
     <li>

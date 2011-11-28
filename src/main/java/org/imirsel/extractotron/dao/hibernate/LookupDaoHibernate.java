@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.imirsel.extractotron.dao.LookupDao;
 import org.imirsel.extractotron.model.Role;
+import org.imirsel.extractotron.model.SongCollection;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -38,4 +39,9 @@ public class LookupDaoHibernate implements LookupDao {
 
         return hibernateTemplate.find("from Role order by name");
     }
+
+	public List<SongCollection> getSongCollections() {
+		log.debug("Retrieving all SongCollection names...");
+		return hibernateTemplate.find("from SongCollection order by name");
+	}
 }

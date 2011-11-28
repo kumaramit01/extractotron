@@ -150,15 +150,15 @@ public class UserDaoTest extends BaseDaoTestCase {
 
         User user = compassTemplate.get(User.class, -2);
         assertNotNull(user);
-        assertEquals("Matt", user.getFirstName());
+        assertEquals("Amit", user.getFirstName());
 
         compassTemplate.execute(new CompassCallbackWithoutResult() {
             @Override
             protected void doInCompassWithoutResult(CompassSession compassSession) throws CompassException {
                 CompassHits hits = compassSession.find("Matt");
                 assertEquals(1, hits.length());
-                assertEquals("Matt", ((User) hits.data(0)).getFirstName());
-                assertEquals("Matt", hits.resource(0).getValue("firstName"));
+                assertEquals("Amit", ((User) hits.data(0)).getFirstName());
+                assertEquals("Amit", hits.resource(0).getValue("firstName"));
             }
         });
 
