@@ -49,14 +49,14 @@ public class LookupManagerImpl implements LookupManager {
 	public List<LabelValue> getSupportedFeatures() {
 		LabelValue[] list = new LabelValue[]{
 				new LabelValue("Beat","beat"),
-				new LabelValue("LinearPredictionCepstralCoefficients","lpcc"),
-				new LabelValue("LineSpectralPair","lsp"),
-				new LabelValue("MelFrequencyCepstralCoefficients","mfcc"),
-				new LabelValue("SpectralCrestFactor","scf"),
-				new LabelValue("SpectralFlatnessMeasure","sfm"),
-				new LabelValue("sfmscf","sfmscf"),
-				new LabelValue("stft","stft"),
-				new LabelValue("stftmfcc","stftmfcc")};
+				new LabelValue("Linear Prediction Cepstral Coefficients","lpcc"),
+				new LabelValue("Line Spectral Pair","lsp"),
+				new LabelValue("Mel-Frequency Cepstral Coefficients","mfcc"),
+				new LabelValue("Spectral Crest Factor","scf"),
+				new LabelValue("Spectral Flatness Measure","sfm"),
+				new LabelValue("SCF and SFM features","sfmscf"),
+				new LabelValue("Centroid, Rolloff, Flux, ZeroCrossings","stft"),
+				new LabelValue("Centroid, Rolloff Flux, ZeroCrossings, Mel-frequency Cepstral Coefficients","stftmfcc")};
 		return Arrays.asList(list);
 	}
 
