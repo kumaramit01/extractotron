@@ -5,6 +5,7 @@ import org.imirsel.extractotron.dao.CollectionDao;
 import org.imirsel.extractotron.dao.LookupDao;
 import org.imirsel.extractotron.dao.hibernate.CollectionNotFoundException;
 import org.imirsel.extractotron.model.LabelValue;
+import org.imirsel.extractotron.model.Role;
 import org.imirsel.extractotron.model.SongCollection;
 import org.imirsel.extractotron.service.CollectionManager;
 import org.imirsel.extractotron.service.CollectionService;
@@ -34,11 +35,12 @@ public class CollectionManagerImpl extends GenericManagerImpl<SongCollection, Lo
         this.collectionDao = collectionDao;
     }
 
+
     /**
      * {@inheritDoc}
      */
-    public SongCollection getCollection(String id) {
-        return collectionDao.get(new Long(id));
+    public SongCollection getCollection(String name) {
+        return collectionDao.getSongCollectionByName(name);
     }
 
     /**

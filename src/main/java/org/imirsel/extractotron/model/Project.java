@@ -1,8 +1,10 @@
 package org.imirsel.extractotron.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -42,6 +45,7 @@ public class Project extends BaseObject implements Serializable{
 	private Date timeStarted;   
 	private Date timeEnded;
 	private String status;
+	private Set<Extractor> extractors = new HashSet<Extractor>();
 	
 	private Set<SongCollection> songCollections = new HashSet<SongCollection>();
 	
@@ -138,6 +142,18 @@ public class Project extends BaseObject implements Serializable{
 		return songCollections;
 	}
 
+	 @Transient
+	 public List<LabelValue> getSongCollectionList() {
+		 List<LabelValue> projectCollections = new ArrayList<LabelValue>();
+
+		 if (this.songCollections != null) {
+			 for (SongCollection sc : songCollections) {
+				 projectCollections.add(new LabelValue(sc.getName(), sc.getName()));
+			 }
+		 }
+
+		 return projectCollections;
+	 }
 
 	public void setId(Long id) {
 	    this.id = id;
@@ -173,4 +189,50 @@ public class Project extends BaseObject implements Serializable{
 		return (name != null ? name.hashCode() : 0);
 	}
 
+
+	public void addCollection(SongCollection sc) {
+		this.getSongCollections().add(sc);
+	}
+
+	 @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(
+	            name = "project_extractor",
+	            joinColumns = { @JoinColumn(name = "project_id") },
+	            inverseJoinColumns = @JoinColumn(name = "extractor_id")
+	  )
+	public Set<Extractor> getExtractors() {
+		return extractors;
+	}
+
+	
+	public void setExtractors(Set<Extractor> extractors) {
+		this.extractors = extractors;
+	}
+
+
+
+	@Transient
+	 public Extractor getExtractor() {
+		return extractors.iterator().next();
+     }
+
+
+	@Transient
+	public void addExtractor(Extractor extractor) {
+		this.getExtractors().add(extractor);
+	}
+	
+	@Transient
+	 public List<LabelValue> getExtractorsList(){
+		 List<LabelValue> collections = new ArrayList<LabelValue>();
+		 if (this.extractors != null) {
+			 for (Extractor sc : extractors) {
+				 collections.add(new LabelValue(sc.getName(), sc.getName()));
+			 }
+		 }
+		 return collections;
+	 }
+
+
+	 
 }

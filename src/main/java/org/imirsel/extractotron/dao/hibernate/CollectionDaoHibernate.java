@@ -21,6 +21,20 @@ public class CollectionDaoHibernate extends GenericDaoHibernate<SongCollection, 
         return getHibernateTemplate().find("from SongCollection u order by upper(u.name)");
 	}
 	
+	  /**
+     * {@inheritDoc}
+     */
+    public SongCollection getSongCollectionByName(String name) {
+        List collections = getHibernateTemplate().find("from Collection where name=?", name);
+       System.out.println("HERE GETTING THE COLLECTION BY NAME: " + collections);
+        if (collections.isEmpty()) {
+            return null;
+        } else {
+            return (SongCollection) collections.get(0);
+        }
+    }
+
+	
     /** 
      * {@inheritDoc}
     */

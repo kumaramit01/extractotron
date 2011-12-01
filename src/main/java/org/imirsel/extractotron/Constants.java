@@ -92,4 +92,9 @@ public final class Constants {
      * The name of the CSS Theme setting.
      */
     public static final String CSS_THEME = "csstheme";
+
+	public static final String EXTRACTOR_LIST = "extractorList";
+
+	public static final String EXTRACTOR = "extractor";
+	
 }

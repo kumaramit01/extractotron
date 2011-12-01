@@ -8,6 +8,7 @@
         <class>org.imirsel.extractotron.model.Song</class>
         <class>org.imirsel.extractotron.model.Project</class>
         <class>org.imirsel.extractotron.model.SongCollection</class>
+        <class>org.imirsel.extractotron.model.Extractor</class>
     </persistence-unit>
 
     <!-- WARNING: This file's file original source is at web/common/src/main/resources/META-INF. The

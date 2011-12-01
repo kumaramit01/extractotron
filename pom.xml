@@ -114,7 +114,7 @@
                     <driver>${jdbc.driverClassName}</driver>
                     <username>${jdbc.username}</username>
                     <password>${jdbc.password}</password>
-                    <url>${jdbc.url}</url>
+                    <url>${jdbc.url}&amp;sessionVariables=FOREIGN_KEY_CHECKS=0</url>
                     <src>src/test/resources/sample-data.xml</src>
                     <type>${dbunit.operation.type}</type>
                     <schema>${dbunit.schema}</schema>

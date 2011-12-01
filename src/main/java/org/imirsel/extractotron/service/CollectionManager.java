@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.imirsel.extractotron.dao.CollectionDao;
 import org.imirsel.extractotron.dao.hibernate.CollectionNotFoundException;
-import org.imirsel.extractotron.model.LabelValue;
 import org.imirsel.extractotron.model.SongCollection;
 
 

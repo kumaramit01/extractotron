@@ -3,7 +3,7 @@
 <head>
     <title><fmt:message key="userProfile.title"/></title>
     <meta name="heading" content="<fmt:message key='projectProfile.heading'/>"/>
-    <meta name="menu" content="UserMenu"/>
+    <meta name="menu" content="ProjectMenu"/>
     <script type="text/javascript" src="<c:url value='/scripts/selectbox.js'/>"></script>
 </head>
 
@@ -25,6 +25,11 @@
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
 
 <ol>
+  
+      
+  
+  
+  
     <li class="buttonBar right">
         <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
 
@@ -45,6 +50,10 @@
             </c:otherwise>
         </c:choose>
     </li>
+    
+
+    
+    
     <li>
     <div class="left">
         <appfuse:label styleClass="desc" key="project.name"/>
@@ -78,32 +87,55 @@
    
     </li>
     
-    
-    <li>
+      <li>
         <fieldset class="pickList">
             <legend><fmt:message key="projectProfile.assignCollections"/></legend>
             <table class="pickList">
                 <tr>
                     <th class="pickLabel">
-                        <appfuse:label key="user.availableCollections" colon="false" styleClass="required"/>
+                        <appfuse:label key="project.availableCollections" colon="false" styleClass="required"/>
                     </th>
                     <td></td>
                     <th class="pickLabel">
-                        <appfuse:label key="user.songCollections" colon="false" styleClass="required"/>
+                        <appfuse:label key="project.songCollections" colon="false" styleClass="required"/>
                     </th>
                 </tr>
                 <c:set var="leftList" value="${availableCollections}" scope="request"/>
-                <c:set var="rightList" value="${user.songCollections}" scope="request"/>
+                <c:set var="rightList" value="${project.songCollectionList}" scope="request"/>
                 <c:import url="/WEB-INF/pages/pickList.jsp">
                     <c:param name="listCount" value="1"/>
                     <c:param name="leftId" value="availableCollections"/>
-                    <c:param name="rightId" value="userCollections"/>
+                    <c:param name="rightId" value="songCollections1"/>
                 </c:import>
             </table>
         </fieldset>
     </li>
+    
+     <li>
+        <fieldset class="pickList">
+            <legend><fmt:message key="projectProfile.assignExtractor"/></legend>
+            <table class="pickList">
+                <tr>
+                    <th class="pickLabel">
+                        <appfuse:label key="project.availableExtractors" colon="false" styleClass="required"/>
+                    </th>
+                    <td></td>
+                    <th class="pickLabel">
+                        <appfuse:label key="project.extractors" colon="false" styleClass="required"/>
+                    </th>
+                </tr>
+                <c:set var="leftList" value="${availableExtractors}" scope="request"/>
+                <c:set var="rightList" value="${project.extractorsList}" scope="request"/>
+                <c:import url="/WEB-INF/pages/pickOne.jsp">
+                    <c:param name="listCount" value="1"/>
+                    <c:param name="leftId" value="availableExtractors"/>
+                    <c:param name="rightId" value="selectedExtractor"/>
+                </c:import>
+            </table>
+        </fieldset>
+    </li>
+    
 
-  
 
     <li>
      <div class="left">
@@ -128,7 +160,9 @@
 
 <!-- This is here so we can exclude the selectAll call when roles is hidden -->
 function onFormSubmit(theForm) {
-    return validateProject(theForm);
+	  selectAll('songCollections1');
+	  selectAll('selectedExtractor');
+	return true;//validateProject(theForm);
 }
 </script>
 

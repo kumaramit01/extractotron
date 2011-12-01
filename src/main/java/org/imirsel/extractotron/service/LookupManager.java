@@ -17,4 +17,8 @@ public interface LookupManager {
     List<LabelValue> getAllRoles();
     
     List<LabelValue> getAllCollections();
+    
+    List<LabelValue> getSupportedFeatures();
+
+	List<LabelValue> getAllExtractors();
 }

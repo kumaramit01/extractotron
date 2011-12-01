@@ -11,5 +11,6 @@
         <mapping class="org.imirsel.extractotron.model.Song"/>
         <mapping class="org.imirsel.extractotron.model.Project"/>
         <mapping class="org.imirsel.extractotron.model.SongCollection"/>
+       <mapping class="org.imirsel.extractotron.model.Extractor"/>
     </session-factory>
 </hibernate-configuration>

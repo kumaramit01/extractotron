@@ -3,6 +3,7 @@ package org.imirsel.extractotron.dao.hibernate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.imirsel.extractotron.dao.LookupDao;
+import org.imirsel.extractotron.model.Extractor;
 import org.imirsel.extractotron.model.Role;
 import org.imirsel.extractotron.model.SongCollection;
 import org.hibernate.SessionFactory;
@@ -43,5 +44,9 @@ public class LookupDaoHibernate implements LookupDao {
 	public List<SongCollection> getSongCollections() {
 		log.debug("Retrieving all SongCollection names...");
 		return hibernateTemplate.find("from SongCollection order by name");
+	}
+
+	public List<Extractor> getExtractors() {
+		return hibernateTemplate.find("from Extractor order by name");
 	}
 }

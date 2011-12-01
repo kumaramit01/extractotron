@@ -18,4 +18,6 @@ public interface CollectionDao extends GenericDao<SongCollection, Long>  {
 
 	SongCollection loadCollectionByName(String name) throws CollectionNotFoundException;
 
+	SongCollection getSongCollectionByName(String name);
+
 }

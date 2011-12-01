@@ -1,6 +1,7 @@
 package org.imirsel.extractotron.service.impl;
 
 import org.imirsel.extractotron.dao.LookupDao;
+import org.imirsel.extractotron.model.Extractor;
 import org.imirsel.extractotron.model.LabelValue;
 import org.imirsel.extractotron.model.Role;
 import org.imirsel.extractotron.model.SongCollection;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -39,6 +41,29 @@ public class LookupManagerImpl implements LookupManager {
 		List<SongCollection> collections = dao.getSongCollections();
 		List<LabelValue> list = new ArrayList<LabelValue>();
 		for(SongCollection sc:collections){
+			list.add(new LabelValue(sc.getName(),sc.getName()));
+		}
+		return list;
+	}
+
+	public List<LabelValue> getSupportedFeatures() {
+		LabelValue[] list = new LabelValue[]{
+				new LabelValue("Beat","beat"),
+				new LabelValue("LinearPredictionCepstralCoefficients","lpcc"),
+				new LabelValue("LineSpectralPair","lsp"),
+				new LabelValue("MelFrequencyCepstralCoefficients","mfcc"),
+				new LabelValue("SpectralCrestFactor","scf"),
+				new LabelValue("SpectralFlatnessMeasure","sfm"),
+				new LabelValue("sfmscf","sfmscf"),
+				new LabelValue("stft","stft"),
+				new LabelValue("stftmfcc","stftmfcc")};
+		return Arrays.asList(list);
+	}
+
+	public List<LabelValue> getAllExtractors() {
+		List<Extractor> collections = dao.getExtractors();
+		List<LabelValue> list = new ArrayList<LabelValue>();
+		for(Extractor sc:collections){
 			list.add(new LabelValue(sc.getName(),sc.getName()));
 		}
 		return list;

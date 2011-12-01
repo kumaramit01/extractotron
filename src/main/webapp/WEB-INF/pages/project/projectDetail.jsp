@@ -26,7 +26,7 @@
 <br/>
 <br/>
 <div id="result">
-<i>Name:</i> <a href="/project/get?id=${collection.id}">${project.name} </a> <br/>
+<i>Name:</i> <a href="/project/get?id=${project.id}">${project.name} </a> <br/>
 <br/>
 <i>Description:</i> ${project.description}
 <br/>
@@ -38,8 +38,12 @@
 
 <br/>
 <i>Time Ended:</i> ${project.timeEnded}
-
-
+<br/>
+List of Collections: <br/>
+<c:forEach var="collection" items="${project.songCollections}">
+<a href="/collection/get?id=${collection.id}">${collection.name}</a>
+<br/>
+</c:forEach>
 
 </div>
 <br/>

@@ -1,5 +1,6 @@
 package org.imirsel.extractotron.webapp.controller;
 
+import java.util.Enumeration;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.imirsel.extractotron.model.Project;
 import org.imirsel.extractotron.model.Role;
 import org.imirsel.extractotron.model.User;
 import org.imirsel.extractotron.service.CollectionManager;
+import org.imirsel.extractotron.service.ExtractorManager;
 import org.imirsel.extractotron.service.LookupManager;
 import org.imirsel.extractotron.service.ProjectManager;
 import org.imirsel.extractotron.service.UserExistsException;
@@ -38,6 +40,8 @@ public class ProjectFormController extends BaseFormController{
 	private ProjectManager projectManager;
 	private CollectionManager collectionManager;
 	private LookupManager lookupManager;
+	@Autowired
+	private ExtractorManager extractorManager;
 	
 	@Autowired
 	public void setLookupManager(LookupManager lookupManager) {
@@ -92,14 +96,34 @@ public class ProjectFormController extends BaseFormController{
             return getSuccessView();
         } else {
 
-            // only attempt to change roles if user is admin for other users,
-            // showForm() method will handle populating
-            if (request.isUserInRole(Constants.ADMIN_ROLE)) {
-              // if Admin is here
-            }
+        	Enumeration ee= request.getParameterNames();
+        	
+        	while(ee.hasMoreElements()){
+        		System.out.println("====> "+ ee.nextElement());
+        	}
+        	
+        	 String[] songCollections = request.getParameterValues("songCollections1");
+             if (songCollections != null) {
+                 //user.getRoles().clear();
+                 project.getSongCollections().clear();
+                 for (String sc : songCollections) {
+                	 project.addCollection(collectionManager.getCollectionByName(sc));
+                 }
+             }
+             
+             String[] selectedExtractor = request.getParameterValues("selectedExtractor");
+             if (selectedExtractor != null) {
+                 //user.getRoles().clear();
+                 project.getExtractors().clear();
+                 for (String sc : selectedExtractor) {
+                	 
+					project.addExtractor(extractorManager.getExtractorByName(sc));
+                 }
+             }
 
           
             try {
+            	log.debug("Number of Song Collections: "+project.getSongCollections().size());
                 userManager.saveProject(project);
             } catch (AccessDeniedException ade) {
                 // thrown by UserSecurityAdvice configured in aop:advisor userManagerSecurity
@@ -134,7 +158,13 @@ public class ProjectFormController extends BaseFormController{
     	
     	// set the available collections as the
         request.setAttribute("availableCollections", lookupManager.getAllCollections());
+
+    	// set the available extractors as the
+        request.setAttribute("availableExtractors", lookupManager.getAllExtractors());
     	
+    	// set the supported features as the
+        request.setAttribute("supportedFeatures", lookupManager.getSupportedFeatures());
+
     	
     	
     	
