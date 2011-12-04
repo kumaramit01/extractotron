@@ -64,7 +64,7 @@ public class LookupManagerImpl implements LookupManager {
 		List<Extractor> collections = dao.getExtractors();
 		List<LabelValue> list = new ArrayList<LabelValue>();
 		for(Extractor sc:collections){
-			list.add(new LabelValue(sc.getName(),sc.getName()));
+			list.add(new LabelValue(sc.getName(),sc.getCommandLine()));
 		}
 		return list;
 	}

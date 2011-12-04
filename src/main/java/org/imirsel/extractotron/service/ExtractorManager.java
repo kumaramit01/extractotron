@@ -12,4 +12,6 @@ public interface ExtractorManager extends GenericManager<Extractor, Long>{
     List<Extractor> search(String searchTerm);
     public List<Extractor> getExtractors();
     public Extractor getExtractorByName(String name) throws ExtractorNotFoundException;
+    public Extractor getExtractorByCommandLine(String commandLine) throws ExtractorNotFoundException;
+
 }

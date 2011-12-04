@@ -43,6 +43,15 @@ public class ExtractorDaoHibernate extends GenericDaoHibernate<Extractor, Long> 
             return  (Extractor) collections.get(0);
         }
     }
+    
+    public Extractor loadExtractorByCommandLine(String commandLine) throws ExtractorNotFoundException {
+        List collections = getHibernateTemplate().find("from Extractor where commandLine=?", commandLine);
+        if (collections == null || collections.isEmpty()) {
+            throw new ExtractorNotFoundException("commandLine '" + commandLine + "' not found...");
+        } else {
+            return  (Extractor) collections.get(0);
+        }
+    }
 
 	
 

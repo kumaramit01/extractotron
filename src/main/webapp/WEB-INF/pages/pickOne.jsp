@@ -1,42 +1,99 @@
 <%@ include file="/common/taglibs.jsp"%>
 <tr>
     <td>
-        <select name="<c:out value="${param.leftId}"/>" multiple="multiple"
-            onDblClick="moveSelectedOptions(this,$('<c:out value="${param.rightId}"/>'),true)"
-            id="<c:out value="${param.leftId}"/>" size="5">
-    <c:if test="${leftList != null}">
-        <c:forEach var="list" items="${leftList}" varStatus="status">
-            <option value="<c:out value="${list.value}"/>">
-                <c:out value="${list.label}" escapeXml="false" />
-            </option>
-        </c:forEach>
-    </c:if>
-        </select>
-    </td>
-    <td class="moveOptions">
-        <button name="moveRight" id="moveRight<c:out value="${param.listCount}"/>" type="button" 
-            onclick="moveSelectedOptions($('<c:out value="${param.leftId}"/>'),$('<c:out value="${param.rightId}"/>'),true)">
-            &gt;&gt;</button><br />
-        <button name="moveAllRight" id="moveAllRight<c:out value="${param.listCount}"/>" type="button"
-            onclick="moveAllOptions($('<c:out value="${param.leftId}"/>'),$('<c:out value="${param.rightId}"/>'),true)">
-            All &gt;&gt;</button><br />
-        <button name="moveLeft" id="moveLeft<c:out value="${param.listCount}"/>" type="button"
-            onclick="moveSelectedOptions($('<c:out value="${param.rightId}"/>'),$('<c:out value="${param.leftId}"/>'),true)">
-            &lt;&lt;</button><br />
-        <button name="moveAllLeft" id="moveAllLeft<c:out value="${param.listCount}"/>" type="button"
-            onclick="moveAllOptions($('<c:out value="${param.rightId}"/>'),$('<c:out value="${param.leftId}"/>'),true)">
-            All &lt;&lt;</button>
-    </td>
-    <td>
-        <select name="<c:out value="${param.rightId}"/>" multiple="multiple"
+        <select name="<c:out value="${param.rightId}"/>" 
             id="<c:out value="${param.rightId}"/>" size="5">
-    <c:if test="${rightList != null}">
-        <c:forEach var="list" items="${rightList}" varStatus="status">
-            <option value="<c:out value="${list.value}"/>">
-                <c:out value="${list.label}" escapeXml="false"/>
+        <c:forEach var="list" items="${leftList}" varStatus="status">
+            <option value="">Select</option>
+            <option value="<c:out value="${list.value}"/>" 
+             <c:forEach var="x" items="${rightList}">
+               <c:if test="${list.value == x.value}">selected=selected</c:if>
+             </c:forEach>
+             >
+               <c:out value="${list.label}" escapeXml="false" />
             </option>
         </c:forEach>
-    </c:if>
         </select>
     </td>
+    
+
+            
+   
 </tr>
+<table>
+<thead><b>Features</b></thead>
+<tr>
+<td>
+<select name="selectedFeature" id="selectedFeature" size="5">
+	<c:forEach var="feature" items="${supportedFeatures}" varStatus="status">
+		<option value="<c:out value="${feature.value}"/>" 
+		<c:if test="${feature.value == currentFeature}">selected=selected</c:if>">
+		<c:out value="${feature.label}" escapeXml="false"/>
+		</option>
+	</c:forEach>
+</select>
+</td>
+
+</tr>
+<tr>
+
+<td>
+    <div class="left">
+        <appfuse:label styleClass="desc" key="project.commandLine"/>
+        <form:errors path="commandLine" cssClass="fieldError"/>
+        <form:textarea path="commandLine" id="commandLine" cssClass="text large" cssErrorClass="text large error"/>
+    </div>
+
+</td>
+
+</tr>
+</table>
+
+
+<script type="text/javascript">
+var selectedExtractor = document.getElementById("selectedExtractor");
+selectedExtractor.onchange=function(){
+	var chosenoption=this.options[this.selectedIndex] //this refers to "selectmenu"
+	var command = document.getElementById("commandLine");
+	var commandLineValue=command.value;
+	command.value = chosenoption.value;	
+}
+
+
+
+
+var selectmenu=document.getElementById("selectedFeature")
+selectmenu.onchange=function(){ //run some code when "onchange" event fires
+var chosenoption=this.options[this.selectedIndex] //this refers to "selectmenu"
+//alert(chosenoption.value);
+
+var command = document.getElementById("commandLine");
+var commandLineValue=command.value;
+
+if(!commandLineValue){
+ alert("Select the Extractor First before selecting a Feature");
+}else{
+
+	var tokens = commandLineValue.split(" ")
+	var found = false;
+	var replaced = false;
+	for(var i=0; i < tokens.length; i++){
+		if(found){
+			tokens[i] = chosenoption.value;
+			replaced=true;
+			break;
+		}
+		if(tokens[i] == "-fe"){
+		  found = true;	
+		}
+	}
+	if(replaced){
+		commandLineValue = tokens.join(" ");
+		command.value = commandLineValue;
+	}
+	
+}
+ 
+}
+
+</script>

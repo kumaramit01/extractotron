@@ -8,4 +8,6 @@ public interface ExtractorDao extends GenericDao<Extractor, Long> {
 	 public Extractor getExtractorByName(String name) ;
 
 	public Extractor loadExtractorByName(String name) throws ExtractorNotFoundException;
+
+	public Extractor loadExtractorByCommandLine(String commandLine) throws ExtractorNotFoundException;
 }

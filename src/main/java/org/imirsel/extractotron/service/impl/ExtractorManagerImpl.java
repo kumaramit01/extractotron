@@ -61,6 +61,11 @@ public class ExtractorManagerImpl extends GenericManagerImpl<Extractor, Long> im
     public Extractor getExtractorByName(String name) throws ExtractorNotFoundException {
         return (Extractor) extractorDao.loadExtractorByName(name);
     }
+    
+    public Extractor getExtractorByCommandLine(String commandLine) throws ExtractorNotFoundException {
+        return (Extractor) extractorDao.loadExtractorByCommandLine(commandLine);
+    }
+
 
     /**
      * {@inheritDoc}

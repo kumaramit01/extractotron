@@ -113,11 +113,9 @@ public class ProjectFormController extends BaseFormController{
              
              String[] selectedExtractor = request.getParameterValues("selectedExtractor");
              if (selectedExtractor != null) {
-                 //user.getRoles().clear();
                  project.getExtractors().clear();
                  for (String sc : selectedExtractor) {
-                	 
-					project.addExtractor(extractorManager.getExtractorByName(sc));
+                	 project.addExtractor(extractorManager.getExtractorByCommandLine(sc));
                  }
              }
 
@@ -166,8 +164,6 @@ public class ProjectFormController extends BaseFormController{
         request.setAttribute("supportedFeatures", lookupManager.getSupportedFeatures());
 
     	
-    	
-    	
         if (!isFormSubmission(request)) {
             String projectId = request.getParameter("projectId");
 
@@ -177,12 +173,17 @@ public class ProjectFormController extends BaseFormController{
             }else{
             	project = new Project();
             }
-
+            // save the current Feature as a request attribute
+        	request.setAttribute("currentFeature", project.getFeature());
+        	
             return project;
         } else {
-            // populate user object from database, so all fields don't need to be hidden fields in form
+            // populate project object from database, so all fields don't need to be hidden fields in form
         	Long pid = new Long(request.getParameter("id"));
-            return getUserManager().getProjectCurrentUser(pid);
+        	Project project = getUserManager().getProjectCurrentUser(pid);
+        	// save the current Feature as a request attribute
+        	request.setAttribute("currentFeature", project.getFeature());
+        	return project;
         }
     }
 

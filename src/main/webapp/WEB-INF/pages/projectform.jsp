@@ -71,13 +71,7 @@
     
     </li>
  
-    <li>
-    <div class="left">
-        <appfuse:label styleClass="desc" key="project.commandLine"/>
-        <form:errors path="commandLine" cssClass="fieldError"/>
-        <form:input path="commandLine" id="commandLine" cssClass="text large" cssErrorClass="text large error"/>
-    </div>
-    </li>
+
     <li>
         <div class="left">
             <appfuse:label styleClass="desc" key="project.status"/>
@@ -126,6 +120,8 @@
                 </tr>
                 <c:set var="leftList" value="${availableExtractors}" scope="request"/>
                 <c:set var="rightList" value="${project.extractorsList}" scope="request"/>
+                <c:set var="commandLineVal" value="${project.commandLine}" scope="request"/>
+                
                 <c:import url="/WEB-INF/pages/pickOne.jsp">
                     <c:param name="listCount" value="1"/>
                     <c:param name="leftId" value="availableExtractors"/>
@@ -134,7 +130,8 @@
             </table>
         </fieldset>
     </li>
-    
+  
+
 
 
     <li>

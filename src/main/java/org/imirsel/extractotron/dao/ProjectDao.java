@@ -2,7 +2,6 @@ package org.imirsel.extractotron.dao;
 
 import java.util.List;
 
-import org.imirsel.extractotron.dao.hibernate.ProjectNotFoundException;
 import org.imirsel.extractotron.model.Project;
 
 

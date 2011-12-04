@@ -33,7 +33,7 @@ public class ExtractorController {
         return new ModelAndView("extractor/extractorList", Constants.EXTRACTOR_LIST, extractorManager.search(query));
 	}
 	  
-	@RequestMapping(method = RequestMethod.GET, value="/all")
+	@RequestMapping(method = RequestMethod.GET, value="/list")
 	public ModelAndView list(HttpServletRequest request) throws Exception {
 		// set the available collections as the
         request.setAttribute("supportedFeatures", lookupManager.getSupportedFeatures());

@@ -232,6 +232,28 @@ public class Project extends BaseObject implements Serializable{
 		 }
 		 return collections;
 	 }
+	
+	@Transient
+	public String getFeature(){
+		if(this.getCommandLine() == null){
+			return "";
+		}else{
+			String[] tokens = this.getCommandLine().split("\\s+");
+			boolean found=Boolean.FALSE;
+			String feature = "";
+			for(String token:tokens){
+				if(found){
+					feature = token;
+					break;
+				}
+				if(token.equalsIgnoreCase("-fe")){
+					found = Boolean.TRUE;
+				}
+			}
+			return feature;
+		}
+		
+	}
 
 
 	 
