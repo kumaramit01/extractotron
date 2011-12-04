@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.imirsel.extractotron.dao.LookupDao;
 import org.imirsel.extractotron.model.Extractor;
+import org.imirsel.extractotron.model.LabelValue;
 import org.imirsel.extractotron.model.Role;
 import org.imirsel.extractotron.model.SongCollection;
 import org.hibernate.SessionFactory;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,5 +50,14 @@ public class LookupDaoHibernate implements LookupDao {
 
 	public List<Extractor> getExtractors() {
 		return hibernateTemplate.find("from Extractor order by name");
+	}
+
+	public List<LabelValue> getRunPhases() {
+		String[] phases = new String[]{"CREATED","RUNNING","ABORTED","ABORT_REQUESTED","FINISHED"};
+		List<LabelValue> list = new ArrayList<LabelValue>();
+		for(String phase:phases){
+			list.add(new LabelValue(phase,phase));
+		}
+		return list;
 	}
 }

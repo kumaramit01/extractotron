@@ -68,4 +68,10 @@ public class LookupManagerImpl implements LookupManager {
 		}
 		return list;
 	}
+	
+	
+	public List<LabelValue> getRunPhases(){
+		return dao.getRunPhases();
+	}
+	
 }

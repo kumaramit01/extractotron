@@ -12,8 +12,13 @@
             <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload"/>
             <Item name="FileUpload" title="menu.selectFile" page="/fileupload"/>
         </Menu>
+       
         <Menu name="CollectionMenu" title="menu.collection" description="Collection Menu" page="/collection/list" roles="ROLE_ADMIN,ROLE_USER"/>
-        <Menu name="ProjectMenu" title="menu.project" description="Project Menu" page="/project/list" roles="ROLE_ADMIN,ROLE_USER"/>
+       
+        <Menu name="ProjectMenu" title="menu.project" description="Project Menu" page="/project/list" roles="ROLE_ADMIN,ROLE_USER">
+        	<Item name="CreateProject" title="menu.project.create" page="/projectform?method=Add"/>
+        </Menu>
+       
         <Menu name="ExtractorMenu" title="menu.extractor" description="Extractor Menu" page="/extractor/list" roles="ROLE_ADMIN,ROLE_USER"/>
         
         

@@ -21,4 +21,6 @@ public interface LookupManager {
     List<LabelValue> getSupportedFeatures();
 
 	List<LabelValue> getAllExtractors();
+
+	List<LabelValue> getRunPhases();
 }

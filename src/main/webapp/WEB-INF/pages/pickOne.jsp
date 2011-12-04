@@ -56,10 +56,27 @@ selectedExtractor.onchange=function(){
 	var chosenoption=this.options[this.selectedIndex] //this refers to "selectmenu"
 	var command = document.getElementById("commandLine");
 	var commandLineValue=command.value;
-	command.value = chosenoption.value;	
+	var tokens = chosenoption.value.split(" ")
+	var found = false;
+	for(var i=0; i < tokens.length; i++){
+		if(found){
+			tokens[i] =getValue();
+			break;
+		}
+		if(tokens[i] == "-fe"){
+		  found = true;	
+		}
+	}
+	command.value = tokens.join(" ");
 }
 
-
+function getValue(){
+	var selectmenu=document.getElementById("selectedFeature")
+	if(selectmenu.selectedIndex==-1)
+		return "";
+	var chosenoption=selectmenu.options[selectmenu.selectedIndex]
+	return chosenoption.value;
+}
 
 
 var selectmenu=document.getElementById("selectedFeature")

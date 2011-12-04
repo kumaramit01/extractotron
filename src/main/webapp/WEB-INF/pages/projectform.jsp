@@ -70,16 +70,26 @@
             </div>
     
     </li>
- 
-
+    
     <li>
-        <div class="left">
+       <div class="left">
             <appfuse:label styleClass="desc" key="project.status"/>
             <form:errors path="status" cssClass="fieldError"/>
-            <form:input path="status" id="status" cssClass="text medium" cssErrorClass="text medium error" maxlength="50"/>
+            
+          <select name="status" id="status" size="1">
+          	<option value="">Select</option>
+			<c:forEach var="phase" items="${supportedPhases}" varStatus="status">
+			<option value="<c:out value="${phase.value}"/>" 
+			<c:if test="${phase.value == project.status}">selected=selected</c:if>">
+			<c:out value="${phase.label}" escapeXml="false"/>
+			</option>
+			</c:forEach>
+		</select>
+		
         </div>
-   
     </li>
+ 
+
     
       <li>
         <fieldset class="pickList">

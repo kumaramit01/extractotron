@@ -1,6 +1,7 @@
 package org.imirsel.extractotron.dao;
 
 import org.imirsel.extractotron.model.Extractor;
+import org.imirsel.extractotron.model.LabelValue;
 import org.imirsel.extractotron.model.Role;
 import org.imirsel.extractotron.model.SongCollection;
 
@@ -21,4 +22,5 @@ public interface LookupDao {
     List<Role> getRoles();
     List<SongCollection> getSongCollections();
 	List<Extractor> getExtractors();
+	List<LabelValue> getRunPhases();
 }

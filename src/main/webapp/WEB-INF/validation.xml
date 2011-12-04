@@ -15,34 +15,22 @@
         </constant>
     </global>
     <formset>
-        <form name="fileUpload">
-            <field property="name" depends="required">
-                <arg key="uploadForm.name"/>
-            </field>
-            <!-- Client-side Javascript won't catch this in IE, but server-side will -->
-            <field property="file" depends="required">
-                <arg key="uploadForm.file"/>
-            </field>
-        </form>
-        <form name="address">
-            <field property="city" depends="required">
-                <arg key="address.city"/>
-            </field>
-            <field property="country" depends="required">
-                <arg key="address.country"/>
-            </field>
-            <field property="postalCode" depends="required,mask">
-                <msg name="mask" key="errors.zip"/>
-                <arg key="address.postalCode"/>
-                <var>
-                    <var-name>mask</var-name>
-                    <var-value>${zip}</var-value>
-                </var>
-            </field>
-            <field property="province" depends="required">
-                <arg key="address.province"/>
-            </field>
-        </form>
+    
+    	<form name="project">
+    		<field property="name" depends="required">
+    			<arg key="project.name"/>
+    		</field>
+    		 <field property="songCollections" depends="required">
+    			<arg key="project.songCollections"/>
+    		</field>
+    		<field property="extractors" depends="required">
+    			<arg key="project.extractors"/>
+    		</field>
+    		<field property="commandLine" depends="required">
+    			<arg key="project.commandLine"/>
+    		</field>
+    	</form>
+       
         <form name="user">
             <field property="username" depends="required">
                 <arg key="user.username"/>
@@ -65,24 +53,7 @@
             <field property="lastName" depends="required">
                 <arg key="user.lastName"/>
             </field>
-            <field property="address.city" depends="required">
-                <arg key="user.address.city"/>
-            </field>
-            <field property="address.country" depends="required">
-                <arg key="user.address.country"/>
-            </field>
-            <field property="address.postalCode" depends="required,mask">
-                <msg name="mask" key="errors.zip"/>
-                <arg key="user.address.postalCode"/>
-                <var>
-                    <var-name>mask</var-name>
-                    <var-value>${zip}</var-value>
-                </var>
-            </field>
-            <field property="address.province" depends="required">
-                <arg key="user.address.province"/>
-            </field>
-            <field property="email" depends="required,email">
+              <field property="email" depends="required,email">
                 <arg key="user.email"/>
             </field>
               <field property="passwordHint" depends="required">

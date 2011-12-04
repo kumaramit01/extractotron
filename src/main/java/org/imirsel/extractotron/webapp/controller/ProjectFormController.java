@@ -70,6 +70,20 @@ public class ProjectFormController extends BaseFormController{
     public String onSubmit(Project project, BindingResult errors, HttpServletRequest request,
                            HttpServletResponse response)
             throws Exception {
+    	
+    	// set the available collections as the
+        request.setAttribute("availableCollections", lookupManager.getAllCollections());
+
+    	// set the available extractors as the
+        request.setAttribute("availableExtractors", lookupManager.getAllExtractors());
+    	
+    	// set the supported features as the
+        request.setAttribute("supportedFeatures", lookupManager.getSupportedFeatures());
+
+        // set the supported phases
+        request.setAttribute("supportedPhases", lookupManager.getRunPhases());
+
+    	
         if (request.getParameter("cancel") != null) {
             if (!StringUtils.equals(request.getParameter("from"), "list")) {
                 return getCancelView();
@@ -78,13 +92,7 @@ public class ProjectFormController extends BaseFormController{
             }
         }
 
-        if (validator != null) { // validator is null during testing
-            validator.validate(project, errors);
-
-            if (errors.hasErrors() && request.getParameter("delete") == null) { // don't validate when deleting
-                return "projectform";
-            }
-        }
+   
 
         log.debug("entering 'onSubmit' method...");
 
@@ -96,12 +104,7 @@ public class ProjectFormController extends BaseFormController{
             return getSuccessView();
         } else {
 
-        	Enumeration ee= request.getParameterNames();
-        	
-        	while(ee.hasMoreElements()){
-        		System.out.println("====> "+ ee.nextElement());
-        	}
-        	
+        
         	 String[] songCollections = request.getParameterValues("songCollections1");
              if (songCollections != null) {
                  //user.getRoles().clear();
@@ -116,6 +119,15 @@ public class ProjectFormController extends BaseFormController{
                  project.getExtractors().clear();
                  for (String sc : selectedExtractor) {
                 	 project.addExtractor(extractorManager.getExtractorByCommandLine(sc));
+                 }
+             }
+             
+             if (validator != null) { // validator is null during testing
+                 validator.validate(project, errors);
+
+                 
+                 if (errors.hasErrors() && request.getParameter("delete") == null) { // don't validate when deleting
+                     return "projectform";
                  }
              }
 
@@ -162,6 +174,9 @@ public class ProjectFormController extends BaseFormController{
     	
     	// set the supported features as the
         request.setAttribute("supportedFeatures", lookupManager.getSupportedFeatures());
+
+        // set the supported phases
+        request.setAttribute("supportedPhases", lookupManager.getRunPhases());
 
     	
         if (!isFormSubmission(request)) {

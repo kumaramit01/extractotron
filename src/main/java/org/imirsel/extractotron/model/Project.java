@@ -70,7 +70,7 @@ public class Project extends BaseObject implements Serializable{
 	   return description;
 	 }
 	 
-	 @Column(nullable = false, length = 16, unique = false)
+	 @Column(nullable = false, unique = false, columnDefinition = " varchar(16) default 'CREATED' ")
 	 @SearchableProperty
 	 public String getStatus() {
 	   return status;
@@ -227,7 +227,7 @@ public class Project extends BaseObject implements Serializable{
 		 List<LabelValue> collections = new ArrayList<LabelValue>();
 		 if (this.extractors != null) {
 			 for (Extractor sc : extractors) {
-				 collections.add(new LabelValue(sc.getName(), sc.getName()));
+				 collections.add(new LabelValue(sc.getName(), sc.getCommandLine()));
 			 }
 		 }
 		 return collections;
