@@ -46,6 +46,8 @@ public class Project extends BaseObject implements Serializable{
 	private Date timeEnded;
 	private String status;
 	private Set<Extractor> extractors = new HashSet<Extractor>();
+
+	private Set<ExecutionContext> executionContexts = new HashSet<ExecutionContext>();
 	
 	private Set<SongCollection> songCollections = new HashSet<SongCollection>();
 	
@@ -160,40 +162,6 @@ public class Project extends BaseObject implements Serializable{
 	}
 
 
-	@Override
-	public String toString() {
-		 ToStringBuilder sb = new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE)
-         .append("name", this.name)
-         .append("status", this.status)
-         .append("commandLine", this.commandLine);
-		 return sb.toString();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		 if (this == o) {
-	            return true;
-	        }
-	        if (!(o instanceof Project)) {
-	            return false;
-	        }
-
-	        final Project project = (Project) o;
-
-	        return !(project != null ? !project.equals(project.getName()) : project.getName() != null);
-
-	}
-
-	@Override
-	public int hashCode() {
-		return (name != null ? name.hashCode() : 0);
-	}
-
-
-	public void addCollection(SongCollection sc) {
-		this.getSongCollections().add(sc);
-	}
-
 	 @ManyToMany(fetch = FetchType.EAGER)
 	    @JoinTable(
 	            name = "project_extractor",
@@ -204,6 +172,19 @@ public class Project extends BaseObject implements Serializable{
 		return extractors;
 	}
 
+
+	 @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(
+	            name = "project_execution_context",
+	            joinColumns = { @JoinColumn(name = "project_id") },
+	            inverseJoinColumns = @JoinColumn(name = "executioncontext_id")
+	  )
+	public Set<ExecutionContext> getExecutionContexts() {
+		return executionContexts;
+	}
+
+
+
 	
 	public void setExtractors(Set<Extractor> extractors) {
 		this.extractors = extractors;
@@ -211,12 +192,26 @@ public class Project extends BaseObject implements Serializable{
 
 
 
+	public void setExecutionContexts(Set<ExecutionContext> executionContexts) {
+		this.executionContexts = executionContexts;
+	}
+	
+	public void addCollection(SongCollection sc) {
+		this.getSongCollections().add(sc);
+	}
+
+	public void addExecutionContext(ExecutionContext ec){
+		this.getExecutionContexts().add(ec);
+	}
+
+
+
+
 	@Transient
 	 public Extractor getExtractor() {
 		return extractors.iterator().next();
      }
-
-
+	
 	@Transient
 	public void addExtractor(Extractor extractor) {
 		this.getExtractors().add(extractor);
@@ -254,6 +249,37 @@ public class Project extends BaseObject implements Serializable{
 		}
 		
 	}
+
+
+	@Override
+	public String toString() {
+		 ToStringBuilder sb = new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE)
+         .append("name", this.name)
+         .append("status", this.status)
+         .append("commandLine", this.commandLine);
+		 return sb.toString();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) {
+	            return true;
+	        }
+	        if (!(o instanceof Project)) {
+	            return false;
+	        }
+
+	        final Project project = (Project) o;
+
+	        return !(project != null ? !project.equals(project.getName()) : project.getName() != null);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return (name != null ? name.hashCode() : 0);
+	}
+
 
 
 	 

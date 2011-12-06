@@ -59,6 +59,13 @@ public final class Constants {
     public static final String PROJECT_LIST = "projectList";
     
     public static final String PROJECT = "project";
+    
+	public static final String EC_LIST = "executorList";
+	
+	public static final String EC = "executor";
+	
+	public static final String MAP = "map";
+
 
 
     /**
@@ -96,5 +103,8 @@ public final class Constants {
 	public static final String EXTRACTOR_LIST = "extractorList";
 
 	public static final String EXTRACTOR = "extractor";
+
+
+
 	
 }

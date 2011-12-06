@@ -17,6 +17,8 @@
        
         <Menu name="ProjectMenu" title="menu.project" description="Project Menu" page="/project/list" roles="ROLE_ADMIN,ROLE_USER">
         	<Item name="CreateProject" title="menu.project.create" page="/projectform?method=Add"/>
+        	<Item name="ViewProject" title="menu.project.view" page="/project/list"/>
+        
         </Menu>
        
         <Menu name="ExtractorMenu" title="menu.extractor" description="Extractor Menu" page="/extractor/list" roles="ROLE_ADMIN,ROLE_USER"/>
