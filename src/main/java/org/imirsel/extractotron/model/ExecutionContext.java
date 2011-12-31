@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -199,6 +200,15 @@ public class ExecutionContext extends BaseObject implements Serializable {
 			hcode = hcode + this.pid.hashCode();
 		}
 		return hcode;
+	}
+
+	@Transient
+	public boolean canBeStopped() {
+		//		String[] phases = new String[]{"CREATED","RUNNING","ABORTED","ABORT_REQUESTED","FINISHED"};
+		if(this.getStatus().equalsIgnoreCase("RUNNING") || this.getStatus().equalsIgnoreCase("ABORT_REQUESTED")){
+			return false;
+		}
+		return true;
 	}
 
 }

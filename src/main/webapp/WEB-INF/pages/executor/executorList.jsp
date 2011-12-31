@@ -8,15 +8,6 @@
     <meta name="menu" content="ProjectMenu"/>
 </head>
 
-<div id="search">
-<form method="get" action="${ctx}/executor/search" id="searchForm">
-    <input type="text" size="20" name="q" id="query" value="${param.q}"
-           placeholder="Enter search terms"/>
-    <input type="submit" value="<fmt:message key="button.search"/>"/>
-</form>
-</div>
-<br/>
-<br/>
 <br/>
 <br/>
 

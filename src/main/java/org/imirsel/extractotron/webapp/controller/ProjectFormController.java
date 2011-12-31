@@ -62,7 +62,7 @@ public class ProjectFormController extends BaseFormController{
 	}
 	
     public ProjectFormController() {
-	        setCancelView("redirect:/mainMenu");
+	        setCancelView("redirect:/project/list");
 	        setSuccessView("redirect:/project/list");
 	}
 	
@@ -142,7 +142,7 @@ public class ProjectFormController extends BaseFormController{
                 return null;
             } catch (ProjectExistsException e) {
                 errors.rejectValue("projectname", "errors.existing.project",
-                        new Object[]{project.getName(), project.getStatus()}, "duplicate project");
+                        new Object[]{project.getName(), project.getName()}, "duplicate project");
 
                 return "projectform";
             }

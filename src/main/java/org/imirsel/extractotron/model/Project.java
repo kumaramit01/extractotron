@@ -42,9 +42,6 @@ public class Project extends BaseObject implements Serializable{
 	private String name;     //required
 	private String description;  
 	private String commandLine; // required
-	private Date timeStarted;   
-	private Date timeEnded;
-	private String status;
 	private Set<Extractor> extractors = new HashSet<Extractor>();
 
 	private Set<ExecutionContext> executionContexts = new HashSet<ExecutionContext>();
@@ -72,11 +69,6 @@ public class Project extends BaseObject implements Serializable{
 	   return description;
 	 }
 	 
-	 @Column(nullable = false, unique = false, columnDefinition = " varchar(16) default 'CREATED' ")
-	 @SearchableProperty
-	 public String getStatus() {
-	   return status;
-	 }
 	 
 	 @Column(nullable = false, length = 256, unique = false)
 	 @SearchableProperty
@@ -84,21 +76,7 @@ public class Project extends BaseObject implements Serializable{
 	   return commandLine;
 	 }
 	 
-	 @Column(nullable = true, unique = false)
-	 @SearchableProperty
-	 public Date getTimeStarted() {
-	   return timeStarted;
-	 }
-	 
-	 @Column(nullable = true, unique = false)
-	 @SearchableProperty
-	 public Date getTimeEnded() {
-	   return timeEnded;
-	 }
-	 
-
-
-	 
+		 
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -111,21 +89,6 @@ public class Project extends BaseObject implements Serializable{
 
 	public void setCommandLine(String commandLine) {
 		this.commandLine = commandLine;
-	}
-
-
-	public void setTimeStarted(Date timeStarted) {
-		this.timeStarted = timeStarted;
-	}
-
-
-	public void setTimeEnded(Date timeEnded) {
-		this.timeEnded = timeEnded;
-	}
-
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 
@@ -255,7 +218,6 @@ public class Project extends BaseObject implements Serializable{
 	public String toString() {
 		 ToStringBuilder sb = new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE)
          .append("name", this.name)
-         .append("status", this.status)
          .append("commandLine", this.commandLine);
 		 return sb.toString();
 	}

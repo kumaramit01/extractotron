@@ -30,20 +30,25 @@
 <br/>
 <i>Description:</i> ${project.description}
 <br/>
-<i>Status:</i> ${project.status}
 <br/>
-<i>Command Line:</i> ${project.commandLine}
 <br/>
-<i>Time Started:</i> ${project.timeStarted}
-
-<br/>
-<i>Time Ended:</i> ${project.timeEnded}
-<br/>
-List of Collections: <br/>
+<h5>List of Collections</h5>
 <c:forEach var="collection" items="${project.songCollections}">
 <a href="/collection/get?id=${collection.id}">${collection.name}</a>
 <br/>
 </c:forEach>
+<br/>
+<hr/>
+<h5>List of Executors</h5>
+<c:forEach var="executor" items="${project.executionContexts}">
+${executor.name} (${executor.commandLine})<br/>
+<a href="/executor/get?project_id=${project.id}&ec_id=${executor.id}">View</a> |
+<a href="/project/remove_executor?project_id=${project.id}&ec_id=${executor.id}">Remove</a> |
+<a href="/executor/execute?project_id=${project.id}&ec_id=${executor.id}">Execute</a> |
+<br/>
+</c:forEach>
+
+
 
 </div>
 <br/>
