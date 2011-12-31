@@ -11,4 +11,5 @@ public interface ExecutionContextManager extends GenericManager<ExecutionContext
     void setExecutionContextDao( ExecutionContextDao executionContextDao);
     List<ExecutionContext> search(String searchTerm);
     public List<ExecutionContext> getExecutionContexts();
+    public ExecutionContext save(ExecutionContext ec);
 }

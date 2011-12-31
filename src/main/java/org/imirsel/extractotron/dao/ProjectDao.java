@@ -14,6 +14,7 @@ public interface ProjectDao extends GenericDao<Project, Long>  {
      */
     List<Project> getProjects();
     public Project saveProject(Project project);
+	void update(Project project);
     
 	//Project loadProjectByName(String name) throws ProjectNotFoundException;
 

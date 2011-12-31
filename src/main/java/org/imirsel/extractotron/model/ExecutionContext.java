@@ -18,6 +18,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.compass.annotations.Searchable;
 import org.compass.annotations.SearchableId;
 import org.compass.annotations.SearchableProperty;
+import org.imirsel.extractotron.Constants;
 
 @Entity
 @Table(name = "execution_context")
@@ -30,13 +31,14 @@ public class ExecutionContext extends BaseObject implements Serializable {
 
 	private Long id;
 	private Long pid;
+	private String uuid;
 	private String name;
 	private Date timeCreated;
 	private Date timeStarted;
 	private Date timeEnded;
 	private Date timePolled;
 	private String status;
-	private String workingDirectory;
+	private String inputFile;
 	private String commandLine;
 	private String resultFile;
 
@@ -77,13 +79,13 @@ public class ExecutionContext extends BaseObject implements Serializable {
 		return timePolled;
 	}
 	
-	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(1024) ")
+	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(4096) ")
 	@SearchableProperty
-	public String getWorkingDirectory() {
-		return workingDirectory;
+	public String getInputFile() {
+		return inputFile;
 	}
 
-	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(1024) ")
+	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(4096) ")
 	@SearchableProperty
 	public String getResultFile() {
 		return resultFile;
@@ -110,8 +112,8 @@ public class ExecutionContext extends BaseObject implements Serializable {
 		this.status = status;
 	}
 
-	public void setWorkingDirectory(String workingDirectory) {
-		this.workingDirectory = workingDirectory;
+	public void setInputFile(String inputFile) {
+		this.inputFile = inputFile;
 	}
 
 
@@ -187,6 +189,15 @@ public class ExecutionContext extends BaseObject implements Serializable {
 		}
 	}
 
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	@Column(nullable = false, unique = false, columnDefinition = " varchar(1024) ")
+	public String getUuid() {
+		return uuid;
+	}
+
 	@Override
 	public int hashCode() {
 		int hcode = 0;
@@ -205,7 +216,7 @@ public class ExecutionContext extends BaseObject implements Serializable {
 	@Transient
 	public boolean canBeStopped() {
 		//		String[] phases = new String[]{"CREATED","RUNNING","ABORTED","ABORT_REQUESTED","FINISHED"};
-		if(this.getStatus().equalsIgnoreCase("RUNNING") || this.getStatus().equalsIgnoreCase("ABORT_REQUESTED")){
+		if(this.getStatus().equalsIgnoreCase(Constants.RUNNING) || this.getStatus().equalsIgnoreCase(Constants.ABORT_REQUESTED)){
 			return false;
 		}
 		return true;

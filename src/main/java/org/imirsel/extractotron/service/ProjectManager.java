@@ -8,4 +8,6 @@ import org.imirsel.extractotron.model.Project;
 public interface ProjectManager extends GenericManager<Project, Long>{
 	  void setProjectDao(ProjectDao projectDao);
 	  List<Project> search(String searchTerm);
+	  void update(Project project);
+	void saveProject(Project project);
 }

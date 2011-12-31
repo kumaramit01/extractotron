@@ -103,8 +103,18 @@ public final class Constants {
 	public static final String EXTRACTOR_LIST = "extractorList";
 
 	public static final String EXTRACTOR = "extractor";
+	
+	public static final String RUNNING ="RUNNING";
+	public static final String ABORT_REQUESTED = "ABORT_REQUESTED";
+	public static final String CREATED = "CREATED";
+	public static final String ABORTED = "ABORTED";
+	public static final String FINISHED = "FINISHED";
+	
+	
+	
 
-
+//	String[] phases = new String[]{"CREATED","RUNNING","ABORTED","ABORT_REQUESTED","FINISHED"};
+	
 
 	
 }

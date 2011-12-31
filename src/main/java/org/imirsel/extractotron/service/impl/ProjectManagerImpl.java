@@ -53,6 +53,14 @@ public class ProjectManagerImpl extends GenericManagerImpl<Project, Long> implem
         return super.search(searchTerm, Project.class);
     }
 
+	public void update(Project project) {
+		projectDao.update(project);
+	}
+
+	public void saveProject(Project project) {
+		projectDao.saveProject(project);
+	}
+
     
 
 

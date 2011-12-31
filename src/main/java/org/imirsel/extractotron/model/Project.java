@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,6 +26,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.compass.annotations.Searchable;
 import org.compass.annotations.SearchableId;
 import org.compass.annotations.SearchableProperty;
+
 
 @Entity
 @Table(name = "project")
@@ -136,11 +138,12 @@ public class Project extends BaseObject implements Serializable{
 	}
 
 
-	 @ManyToMany(fetch = FetchType.EAGER)
+	 @ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
 	    @JoinTable(
 	            name = "project_execution_context",
 	            joinColumns = { @JoinColumn(name = "project_id") },
 	            inverseJoinColumns = @JoinColumn(name = "executioncontext_id")
+	           
 	  )
 	public Set<ExecutionContext> getExecutionContexts() {
 		return executionContexts;
