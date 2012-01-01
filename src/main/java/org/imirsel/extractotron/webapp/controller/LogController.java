@@ -85,7 +85,7 @@ public class LogController {
 		}else if(type.equalsIgnoreCase("result")){
 			sbuilder.append(FileUtils.readFileToString(new File(workspace.getResultFile())));
 		}
-		response.setContentType("plain/text");
+		response.setContentType("text/plain");
 		response.getWriter().print(sbuilder.toString());
 		response.flushBuffer();
 		
