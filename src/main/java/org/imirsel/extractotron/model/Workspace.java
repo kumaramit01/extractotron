@@ -11,6 +11,7 @@ public class Workspace {
 	private String directory;
 	private String inputFile;
 	private String outputFile;
+	private String resultFile;
 	private String logDirectory;
 	private String errFile;
 	
@@ -43,6 +44,13 @@ public class Workspace {
 	}
 	public void setErrFile(String errFile) {
 		this.errFile = errFile;
+	}
+	public String getResultFile() {
+		return resultFile;
+	}
+	
+	public void setResultFile(String resultFile) {
+		 this.resultFile=resultFile;
 	}
 
 }

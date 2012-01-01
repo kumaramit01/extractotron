@@ -141,7 +141,7 @@ public class ProjectController {
 		// parse the commandline to replace the variables -the input file and the output result
 		// file
 		commandLine=commandLine.replaceAll(Pattern.quote("${inputFileWithFileList}"), workspace.getInputFile());
-		commandLine=commandLine.replaceAll(Pattern.quote("${outputFile}"), workspace.getOutputFile());
+		commandLine=commandLine.replaceAll(Pattern.quote("${outputFile}"), workspace.getResultFile());
 		// copy the commandline from this project to the execution context
 		project.setCommandLine(commandLine);
 		

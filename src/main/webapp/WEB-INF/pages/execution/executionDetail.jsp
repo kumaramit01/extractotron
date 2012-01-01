@@ -31,13 +31,12 @@ ${ec.name} (${ec.status})<br/>
 Time Created: ${ec.timeCreated}<br/>
 Time Started: ${ec.timeStarted}<br/>
 Time Finished: ${ec.timeEnded}<br/>
-
-<a href="/log/view?id=${ec.uuid}&type=result">Result File</a><br/>
-<a href="/log/view?id=${ec.uuid}&type=error">Error Console</a><br/>
-<a href="/log/view?id=${ec.uuid}&type=input">Input File</a><br/>
-<a href="/log/view?id=${ec.uuid}&type=output">Console outputs</a><br/>
-<a href="/log/view?id=${ec.uuid}&type=commandline">Command Line</a><br/>
-<a href="/log/download?id=${ec.uuid}">Download Results</a><br/>
+<a href="/log/project/${project.id}/id/${ec.uuid}">View Directory Listing</a><br/>
+<a href="/log/project/${project.id}/id/${ec.uuid}/result">Result File</a><br/>
+<a href="/log/project/${project.id}/id/${ec.uuid}/error">Error Console</a><br/>
+<a href="/log/project/${project.id}/id/${ec.uuid}/input">Input File</a><br/>
+<a href="/log/project/${project.id}/id/${ec.uuid}/output">Console outputs</a><br/>
+<a href="/log/project/${project.id}/id/${ec.uuid}/commandline">Command Line</a><br/>
 <br/>
 </div>
 <br/>

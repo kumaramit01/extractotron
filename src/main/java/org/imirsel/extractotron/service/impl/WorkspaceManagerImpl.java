@@ -52,6 +52,13 @@ public class WorkspaceManagerImpl implements WorkspaceManager {
 		
 		File outputFile = new File(executionContextDirectory,"output");
 		File inputFile = new File(executionContextDirectory,"input");
+		File resultFile = new File(executionContextDirectory,"result");
+		try {
+			resultFile.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		File errFile = new File(logDirectory,"err.txt");
 		
@@ -60,6 +67,8 @@ public class WorkspaceManagerImpl implements WorkspaceManager {
 		workspace.setDirectory(executionContextDirectory.getAbsolutePath());
 		workspace.setLogDirectory(logDirectory.getAbsolutePath());
 		workspace.setErrFile(errFile.getAbsolutePath());
+		workspace.setResultFile(resultFile.getAbsolutePath());
+		
 		return workspace;
 	}
 
