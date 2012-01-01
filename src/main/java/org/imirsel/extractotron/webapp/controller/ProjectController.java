@@ -12,6 +12,7 @@ import org.imirsel.extractotron.model.Project;
 import org.imirsel.extractotron.model.SongCollection;
 import org.imirsel.extractotron.model.Workspace;
 import org.imirsel.extractotron.service.ExecutionContextManager;
+import org.imirsel.extractotron.service.ExecutionManager;
 import org.imirsel.extractotron.service.ProjectManager;
 import org.imirsel.extractotron.service.UserManager;
 import org.imirsel.extractotron.service.WorkspaceManager;
@@ -31,7 +32,9 @@ public class ProjectController {
 	@Autowired
 	private UserManager userManager;
 	@Autowired
-	private ExecutionContextManager executionManager;
+	private ExecutionContextManager executionContextManager;
+	@Autowired
+	private ExecutionManager executionManager;
 	
 	private WorkspaceManager workspaceManager = new WorkspaceManagerImpl("/tmp/");
 
@@ -55,7 +58,7 @@ public class ProjectController {
 			@RequestParam(required = true, value = "ec_id") String ec_id) throws Exception {
 		// get the project to make sure it is owned by the current user
 		Project project =userManager.getProjectCurrentUser(new Long(project_id));
-		ExecutionContext ec= executionManager.get(new Long(ec_id));
+		ExecutionContext ec= executionContextManager.get(new Long(ec_id));
 		boolean success = false;
 		String message = "";
 		if(ec.canBeStopped()){
@@ -124,11 +127,17 @@ public class ProjectController {
 		ec.setTimeCreated(new Date());
 		ec.setResultFile(workspace.getOutputFile());
 		ec.setInputFile(workspace.getInputFile());
+		ec.setWorkingDirectory(workspace.getDirectory());
+		ec.setErrorLogFile(workspace.getErrFile());
+		ec.setOutputFile(workspace.getOutputFile());
+		
 		ec.setPid(-1l);
+		
 		// set the status of  the ec to created.
 		ec.setStatus(Constants.CREATED);
 		ec.setUuid(uid.toString());
-		ec=executionManager.save(ec);
+		ec=executionContextManager.save(ec);
+		
 		// add the EC to the project and and save the project
 		project.addExecutionContext(ec);
 		projectManager.saveProject(project);

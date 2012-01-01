@@ -41,6 +41,9 @@ public class ExecutionContext extends BaseObject implements Serializable {
 	private String inputFile;
 	private String commandLine;
 	private String resultFile;
+	private String workingDirectory;
+	private String errorLogFile;
+	private String outputFile;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -220,6 +223,33 @@ public class ExecutionContext extends BaseObject implements Serializable {
 			return false;
 		}
 		return true;
+	}
+
+	public void setWorkingDirectory(String workingDirectory) {
+		this.workingDirectory = workingDirectory;
+	}
+
+	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(4096) ")
+	public String getWorkingDirectory() {
+		return workingDirectory;
+	}
+
+	public void setErrorLogFile(String errorLogFile) {
+		this.errorLogFile = errorLogFile;
+	}
+
+	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(4096) ")
+	public String getErrorLogFile() {
+		return errorLogFile;
+	}
+
+	public void setOutputFile(String outputLogFile) {
+		this.outputFile = outputLogFile;
+	}
+	
+	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(4096) ")
+	public String getOutputFile() {
+		return outputFile;
 	}
 
 }

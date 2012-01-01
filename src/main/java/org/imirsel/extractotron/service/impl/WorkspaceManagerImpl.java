@@ -43,10 +43,13 @@ public class WorkspaceManagerImpl implements WorkspaceManager {
 		File outputFile = new File(executionContextDirectory,"output");
 		File inputFile = new File(executionContextDirectory,"input");
 		
+		File errFile = new File(logDirectory,"err.txt");
+		
 		workspace.setOutputFile(outputFile.getAbsolutePath());
 		workspace.setInputFile(inputFile.getAbsolutePath());
 		workspace.setDirectory(executionContextDirectory.getAbsolutePath());
 		workspace.setLogDirectory(logDirectory.getAbsolutePath());
+		workspace.setErrFile(errFile.getAbsolutePath());
 		return workspace;
 	}
 

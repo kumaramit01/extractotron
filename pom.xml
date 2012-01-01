@@ -660,6 +660,22 @@
             <artifactId>velocity</artifactId>
             <version>${velocity.version}</version>
         </dependency>
+        <dependency>
+			<groupId>org.hyperic</groupId>
+			<artifactId>sigar</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun</groupId>
+			<artifactId>jna</artifactId>
+			<version>3.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun</groupId>
+			<artifactId>jna-examples</artifactId>
+			<version>3.2.4</version>
+		</dependency>
+        
     </dependencies>
 
     <reporting>

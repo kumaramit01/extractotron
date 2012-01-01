@@ -12,6 +12,7 @@ public class Workspace {
 	private String inputFile;
 	private String outputFile;
 	private String logDirectory;
+	private String errFile;
 	
 	public String getDirectory() {
 		return directory;
@@ -36,6 +37,12 @@ public class Workspace {
 	}
 	public void setLogDirectory(String logDirectory) {
 		this.logDirectory = logDirectory;
+	}
+	public String getErrFile() {
+		return this.errFile;
+	}
+	public void setErrFile(String errFile) {
+		this.errFile = errFile;
 	}
 
 }

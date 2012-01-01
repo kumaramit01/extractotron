@@ -18,6 +18,7 @@ import java.util.List;
  * Implementation of ExecutionContextManager interface.
  *
  */
+@SuppressWarnings("restriction")
 @Service("executionContextManager")
 @WebService(serviceName = "ExecutionContextService", endpointInterface = "org.imirsel.extractotron.service.ExecutionContextService")
 public class ExecutionContextManagerImpl extends GenericManagerImpl<ExecutionContext, Long> implements ExecutionContextManager, ExecutionContextService {
@@ -43,21 +44,12 @@ public class ExecutionContextManagerImpl extends GenericManagerImpl<ExecutionCon
     }
 
 
-
-    
-    
-
     /**
      * {@inheritDoc}
      */
     public List<ExecutionContext> search(String searchTerm) {
         return super.search(searchTerm, ExecutionContext.class);
     }
-
-
-	
-
-	
 
 	
 }
