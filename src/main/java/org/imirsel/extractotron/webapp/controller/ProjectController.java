@@ -1,10 +1,13 @@
 package org.imirsel.extractotron.webapp.controller;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.imirsel.extractotron.Constants;
 import org.imirsel.extractotron.model.ExecutionContext;
@@ -16,7 +19,9 @@ import org.imirsel.extractotron.service.ExecutionManager;
 import org.imirsel.extractotron.service.ProjectManager;
 import org.imirsel.extractotron.service.UserManager;
 import org.imirsel.extractotron.service.WorkspaceManager;
-import org.imirsel.extractotron.service.impl.WorkspaceManagerImpl;
+import org.imirsel.extractotron.service.impl.executor.RemoteProcess;
+import org.imirsel.extractotron.service.impl.executor.RemoteProcessMonitor;
+import org.imirsel.extractotron.service.impl.executor.RemoteProcessMonitorImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +41,8 @@ public class ProjectController {
 	@Autowired
 	private ExecutionManager executionManager;
 	
-	private WorkspaceManager workspaceManager = new WorkspaceManagerImpl("/tmp/");
+	@Autowired
+	private WorkspaceManager workspaceManager;
 
 	@RequestMapping(method = RequestMethod.GET, value="/search")
 	public ModelAndView search(@RequestParam(required = false, value = "q") String query) throws Exception {
@@ -83,9 +89,28 @@ public class ProjectController {
 	   project =userManager.getProjectCurrentUser(new Long(project_id));
 	   return new ModelAndView("project/projectDetail", Constants.PROJECT, project);
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/executionDetail")
+	public ModelAndView executionDetail(@RequestParam(required = true, value = "id")
+			String uuid, @RequestParam(required = true, value = "project_id") String project_id,
+			HttpServletRequest request) throws Exception {
+
+		//RemoteProcess remoteProcess = executionManager.getRemoteProcess(uuid);
+		ExecutionContext executionContext = executionContextManager.getExecutionContextFromUuid(uuid);
+		Project project =userManager.getProjectCurrentUser(new Long(project_id));
+		
+	     Map map = new HashMap();
+		 map.put(Constants.PROJECT, project);
+		 //map.put(Constants.REMOTE_PROCESS,remoteProcess);
+		 map.put(Constants.EXECUTION_CONTEXT, executionContext);
+		 request.setAttribute("map",map);
+		 return new ModelAndView("/execution/executionDetail",Constants.MAP,map);
+	}
+	
 
 	@RequestMapping(method = RequestMethod.GET, value="/execute")
-	public ModelAndView execute(@RequestParam(required = true, value = "id") String project_id) throws Exception {
+	public ModelAndView execute(@RequestParam(required = true, value = "id") String project_id,
+			HttpServletRequest request) throws Exception {
 	
 		// validate the commandline -make sure the ${feature} is selected
 		Project project =userManager.getProjectCurrentUser(new Long(project_id));
@@ -142,14 +167,20 @@ public class ProjectController {
 		project.addExecutionContext(ec);
 		projectManager.saveProject(project);
 		
-		
 		// Start the execution engine -which will return the PID of the process.
-		// update the EC with the PID.
-		// make sure the timer task is running that will look at the database for EC rows with "STARTED"
+		RemoteProcessMonitor rpm = new RemoteProcessMonitorImpl(executionContextManager);
+		RemoteProcess remoteProcess=executionManager.execute(ec,rpm);
+		
+		
+		
+		// make sure the timer task is running that will look at the database for EC rows with "CREATED"
 		// and the PID -see if the process is running or not and update the database entry subsequently.
+	     //Map map = new HashMap();
+		// map.put(Constants.PROJECT, project);
+		 //map.put(Constants.REMOTE_PROCESS,remoteProcess);
+		 //request.setAttribute("map",map);
 		
-		
-		return null;
+		 return new ModelAndView("redirect:/project/executionDetail?id="+remoteProcess.getExecutionContext().getUuid()+"&project_id="+project.getId());
 	}
 			
 	

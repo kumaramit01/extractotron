@@ -12,4 +12,5 @@ public interface ExecutionContextManager extends GenericManager<ExecutionContext
     List<ExecutionContext> search(String searchTerm);
     public List<ExecutionContext> getExecutionContexts();
     public ExecutionContext save(ExecutionContext ec);
+	public ExecutionContext getExecutionContextFromUuid(String uuid);
 }

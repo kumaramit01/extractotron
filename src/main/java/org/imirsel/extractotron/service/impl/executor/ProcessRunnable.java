@@ -33,6 +33,7 @@ public class ProcessRunnable implements Runnable {
 	private static final Logger LOG = Logger.getLogger(ProcessRunnable.class.getName());
 	private final ConcurrentHashMap<String, Process> processHash;
 	private final ConcurrentHashMap<String,RemoteProcess> remoteProcessHash;
+	private final ConcurrentHashMap<String,RemoteProcessMonitor> remoteProcessMonitorHash;
 	private BlockingQueue<ExecutionContext> taskQueue;
 	// to synchronize access when two hash maps are modified at the same time
 	private final Lock mapLock;
@@ -44,12 +45,14 @@ public class ProcessRunnable implements Runnable {
 	public ProcessRunnable(final String id, 
 			ConcurrentHashMap<String, Process> processHash, 
 			ConcurrentHashMap<String,RemoteProcess> remoteProcessHash,
+			ConcurrentHashMap<String,RemoteProcessMonitor> remoteProcessMonitorHash,
 			BlockingQueue<ExecutionContext> taskQueue,
 			Lock mapLock) {
 		this.processId=id;
 		this.taskQueue = taskQueue;
 		this.processHash = processHash;
 		this.remoteProcessHash = remoteProcessHash;
+		this.remoteProcessMonitorHash = remoteProcessMonitorHash;
 		this.mapLock = mapLock;
 	}
 	
@@ -61,6 +64,7 @@ public class ProcessRunnable implements Runnable {
 		ExecutionContext ec= taskQueue.remove();
 		LOG.info("Execute... " + ec);
 		RemoteProcess rp = this.remoteProcessHash.get(ec.getUuid());
+		RemoteProcessMonitor remoteProcessMonitor =remoteProcessMonitorHash.get(ec.getUuid());
 		Assert.isTrue(rp!=null);
 		
 		ProcessBuilder pb = new ProcessBuilder();
@@ -78,6 +82,7 @@ public class ProcessRunnable implements Runnable {
 				ec.setPid(pid);
 				ec.setStatus(Constants.RUNNING);
 				rp.setStatus(Constants.RUNNING);
+				rp.getExecutionContext().setStatus(Constants.RUNNING);
 				mapLock.lock();
 				this.processHash.put(ec.getUuid(),process);
 				mapLock.unlock();
@@ -87,7 +92,7 @@ public class ProcessRunnable implements Runnable {
 				drainStream("output", inputStream,ec.getOutputFile());
 				//rp.setErrorStream(new SimpleRemoteInputStream(new BufferedInputStream(process.getErrorStream())));
 				//rp.setInputStream(new SimpleRemoteInputStream(new BufferedInputStream(process.getInputStream())));
-				//remoteProcessMonitor.processStarted(rp);
+				remoteProcessMonitor.processStarted(rp);
 				// wait for the process
 				int val =-1;
 				try {
@@ -99,10 +104,14 @@ public class ProcessRunnable implements Runnable {
 				}
 				if (val == 0) {
 					LOG.info("Finished the process: ");
+					rp.getExecutionContext().setStatus(Constants.FINISHED);
 					rp.setStatus(Constants.FINISHED);
+					remoteProcessMonitor.processFinished(rp);
 				} else {
 					LOG.info("Process error: ");
+					rp.getExecutionContext().setStatus(Constants.FINISHED_WITH_ERROR);
 					rp.setStatus(Constants.FINISHED_WITH_ERROR);
+					remoteProcessMonitor.processError(rp);
 				}
 				
 			} else { // process is null
@@ -134,6 +143,7 @@ public class ProcessRunnable implements Runnable {
 			if(!success){
 				ec.setStatus(Constants.PROCESS_EXECUTION_FAILED);
 				rp.setStatus(Constants.PROCESS_EXECUTION_FAILED);
+				remoteProcessMonitor.processFailed(rp, errorMessage);
 			}
 			mapLock.lock();
 			this.processHash.remove(ec.getUuid());

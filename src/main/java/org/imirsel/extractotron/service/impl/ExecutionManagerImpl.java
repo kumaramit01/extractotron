@@ -22,6 +22,7 @@ public class ExecutionManagerImpl implements ExecutionManager {
 	int queueSize=20;
 	private ConcurrentHashMap<String, Process> processHash = new ConcurrentHashMap<String, Process>();
 	private final ConcurrentHashMap<String,RemoteProcess> remoteProcessHash = new ConcurrentHashMap<String,RemoteProcess>();
+	private final ConcurrentHashMap<String,RemoteProcessMonitor> remoteProcessMonitorHash = new ConcurrentHashMap<String,RemoteProcessMonitor>();
 
 	private final BlockingQueue<ExecutionContext> taskQueue = new LinkedBlockingQueue<ExecutionContext>();
  	
@@ -30,14 +31,16 @@ public class ExecutionManagerImpl implements ExecutionManager {
 			new LinkedBlockingQueue<Runnable>(queueSize), new NemaRejectedExecutionHandler());
 
 	@Override
-	public RemoteProcess execute(final ExecutionContext ec) throws InterruptedException {
+	public RemoteProcess execute(final ExecutionContext ec, final RemoteProcessMonitor remoteProcessMonitor) throws InterruptedException {
 		this.taskQueue.add(ec);
-		ProcessRunnable processRunner = new ProcessRunnable(ec.getUuid(), processHash, remoteProcessHash,taskQueue, lock);
+		ProcessRunnable processRunner = new ProcessRunnable(ec.getUuid(), processHash, remoteProcessHash,
+				remoteProcessMonitorHash,taskQueue, lock);
 		
 		lock.lock();
 		RemoteProcess remoteProcess = new RemoteProcess(ec);
 		try{
 			remoteProcessHash.put(ec.getUuid(),remoteProcess);
+			remoteProcessMonitorHash.put(ec.getUuid(), remoteProcessMonitor);
 		}finally{
 		lock.unlock();
 		}
@@ -48,22 +51,20 @@ public class ExecutionManagerImpl implements ExecutionManager {
 				int queueSize= executor.getQueue().size();
 				ec.setStatus(Constants.QUEUED);
 				remoteProcess.setStatus(Constants.QUEUED);
-				//remoteProcess.getProcessExecutionInfo().setStatusCode(ProcessExecutionStatus.QUEUED.getCode());
-				//remoteProcessMonitor.processQueued(remoteProcess, count, queueSize);
+				remoteProcessMonitor.processQueued(remoteProcess, count, queueSize);
 			}
 			executor.execute(nemaTask);
 		}catch(RejectedExecutionException rejectExecutionException){
 			try{
 				lock.lock();
-		    //remoteProcessHash.remove(processExecutionProperties.getId());
+		        remoteProcessHash.remove(ec.getUuid());
 				taskQueue.remove(ec);
-		    //remoteProcessMonitorHash.remove(remoteProcess.getId());
+		        remoteProcessMonitorHash.remove(remoteProcess.getExecutionContext().getUuid());
 			}finally{
 				ec.setStatus(Constants.REJECTED);
 				remoteProcess.setStatus(Constants.REJECTED);
 				lock.unlock();
-		    //remoteProcess.getProcessExecutionInfo().setStatusCode(ProcessExecutionStatus.REJECT.getCode());
-		    //remoteProcessMonitor.processRejected(remoteProcess);
+				remoteProcessMonitor.processRejected(remoteProcess);
 			}
 		}
 		return remoteProcess;
@@ -90,6 +91,11 @@ public class ExecutionManagerImpl implements ExecutionManager {
 	public void abort(long pid) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public RemoteProcess getRemoteProcess(String remoteProcessUuid) {
+		return remoteProcessHash.get(remoteProcessUuid);
 	}
 
 }

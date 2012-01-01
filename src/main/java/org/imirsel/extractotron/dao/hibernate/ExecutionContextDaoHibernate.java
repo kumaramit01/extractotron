@@ -21,5 +21,14 @@ public class ExecutionContextDaoHibernate extends GenericDaoHibernate<ExecutionC
         return getHibernateTemplate().find("from ExecutionContext u order by u.timeStarted");
 	}
 	
+	public ExecutionContext getExecutionContextFromUuid(String uuid) {
+       List<ExecutionContext>  list=getHibernateTemplate().find("from ExecutionContext u where u.uuid= ? order by u.timeStarted",uuid);
+       if(list.size()==0){
+    	   throw new RuntimeException("ExecutionContect with uuid: " + uuid + " not found");
+       }
+       return list.get(0);
+	}
+	
+	
 
 }

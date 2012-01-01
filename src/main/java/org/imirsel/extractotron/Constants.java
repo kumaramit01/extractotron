@@ -103,17 +103,22 @@ public final class Constants {
 	public static final String EXTRACTOR_LIST = "extractorList";
 
 	public static final String EXTRACTOR = "extractor";
+
+	public static final String REMOTE_PROCESS = "remoteProcess";
+
+	public static final String EXECUTION_CONTEXT = "executionContext";
+
+	
+	
+	
 	
 	public static final String RUNNING ="RUNNING";
 	public static final String ABORT_REQUESTED = "ABORT_REQUESTED";
 	public static final String CREATED = "CREATED";
 	public static final String ABORTED = "ABORTED";
 	public static final String FINISHED = "FINISHED";
-
 	public static final String QUEUED = "QUEUED";
-
 	public static final String REJECTED = "REJECTED";
-
 	// return values was not 0
 	public static final String FINISHED_WITH_ERROR = "FINISHED_WITH_ERROR";
 	// process execution failed

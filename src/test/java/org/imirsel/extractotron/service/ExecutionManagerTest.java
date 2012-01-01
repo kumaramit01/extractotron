@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.compass.core.util.Assert;
 import org.imirsel.extractotron.model.ExecutionContext;
 import org.imirsel.extractotron.service.impl.executor.RemoteProcess;
+import org.imirsel.extractotron.service.impl.executor.RemoteProcessMonitor;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,9 +20,10 @@ public class ExecutionManagerTest extends BaseManagerTestCase{
 	@Test
 	public void testExecute() throws InterruptedException {
 		Assert.isTrue(executionManager!=null);
+		RemoteProcessMonitor rpm = new TestProcessMonitor();
 		
-		RemoteProcess rp= executionManager.execute(getExecutionContext());
-		RemoteProcess rp1= executionManager.execute(getExecutionContext());
+		RemoteProcess rp= executionManager.execute(getExecutionContext(), rpm);
+		RemoteProcess rp1= executionManager.execute(getExecutionContext(),rpm);
 		
 		try{
 			Thread.sleep(10000);
@@ -67,4 +69,68 @@ public class ExecutionManagerTest extends BaseManagerTestCase{
 		fail("Not yet implemented");
 	}
 
+	class TestProcessMonitor implements RemoteProcessMonitor{
+
+		@Override
+		public void processDequeued(RemoteProcess process) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void processQueued(RemoteProcess process, int count,
+				int queueSize) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void processRejected(RemoteProcess process) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void processStarted(RemoteProcess process) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void processAborted(RemoteProcess process) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void processFinished(RemoteProcess process) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void processSubmitted(RemoteProcess process) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void processFailed(RemoteProcess process, String message) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void processError(RemoteProcess process) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void processTimeout(RemoteProcess process) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 }

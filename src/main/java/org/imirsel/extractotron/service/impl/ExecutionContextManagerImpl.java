@@ -34,6 +34,9 @@ public class ExecutionContextManagerImpl extends GenericManagerImpl<ExecutionCon
 		return this.dao.get(new Long(id));
 	}
 
+	public ExecutionContext getExecutionContextFromUuid(String uuid){
+		 return this.executionContextDao.getExecutionContextFromUuid(uuid);
+	}
 
 	
 

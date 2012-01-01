@@ -82,13 +82,13 @@ public class ExecutionContext extends BaseObject implements Serializable {
 		return timePolled;
 	}
 	
-	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(4096) ")
+	@Column(nullable = false, length = 4096, unique = false, columnDefinition = " text ")
 	@SearchableProperty
 	public String getInputFile() {
 		return inputFile;
 	}
 
-	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(4096) ")
+	@Column(nullable = false, length = 4096, unique = false, columnDefinition = " text ")
 	@SearchableProperty
 	public String getResultFile() {
 		return resultFile;
@@ -229,7 +229,7 @@ public class ExecutionContext extends BaseObject implements Serializable {
 		this.workingDirectory = workingDirectory;
 	}
 
-	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(4096) ")
+	@Column(nullable = false, length = 4096, unique = false, columnDefinition = " text ")
 	public String getWorkingDirectory() {
 		return workingDirectory;
 	}
@@ -238,7 +238,7 @@ public class ExecutionContext extends BaseObject implements Serializable {
 		this.errorLogFile = errorLogFile;
 	}
 
-	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(4096) ")
+	@Column(nullable = false, length = 4096, unique = false, columnDefinition = " text ")
 	public String getErrorLogFile() {
 		return errorLogFile;
 	}
@@ -247,7 +247,7 @@ public class ExecutionContext extends BaseObject implements Serializable {
 		this.outputFile = outputLogFile;
 	}
 	
-	@Column(nullable = false, length = 1024, unique = false, columnDefinition = " varchar(4096) ")
+	@Column(nullable = false, length = 4096, unique = false, columnDefinition = " text ")
 	public String getOutputFile() {
 		return outputFile;
 	}

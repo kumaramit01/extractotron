@@ -4,24 +4,34 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.Set;
+
+import javax.annotation.PostConstruct;
 
 import org.compass.core.util.Assert;
 import org.imirsel.extractotron.model.Song;
 import org.imirsel.extractotron.model.SongCollection;
 import org.imirsel.extractotron.model.Workspace;
 import org.imirsel.extractotron.service.WorkspaceManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
+
+@Service("workspaceManager")
 public class WorkspaceManagerImpl implements WorkspaceManager {
 	
-	final private String parentDirectory;
+	private String parentDirectory;
+
+	@Autowired
+	private Properties workspaceProperties;
 	
-	public WorkspaceManagerImpl(final String location){
-		this.parentDirectory = location;
-	}
-	
+
+	@PostConstruct
 	public void init(){
+		parentDirectory=workspaceProperties.getProperty("location");
+		Assert.isTrue(parentDirectory!=null);
 		File file = new File(parentDirectory);
 		Assert.isTrue(file.exists());
 		Assert.isTrue(file.isDirectory());
@@ -31,7 +41,7 @@ public class WorkspaceManagerImpl implements WorkspaceManager {
 
 	public Workspace getWorkspaceForProject(Long projectId, String execution_id) {
 		Workspace workspace = new Workspace();
-		File homeDirectory = new File(projectId+"");
+		File homeDirectory = new File(parentDirectory,projectId+"");
 		homeDirectory.mkdir();
 		
 		File executionContextDirectory = new File(homeDirectory,execution_id);
