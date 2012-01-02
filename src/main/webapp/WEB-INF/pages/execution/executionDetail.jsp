@@ -31,11 +31,11 @@ ${ec.name} (${ec.status})<br/>
 Time Created: ${ec.timeCreated}<br/>
 Time Started: ${ec.timeStarted}<br/>
 Time Finished: ${ec.timeEnded}<br/>
-<a href="/log/project/${project.id}/id/${ec.uuid}">View Directory Listing</a><br/>
+<a href="/log/project/${project.id}/id/${ec.uuid}">View Directory Listing</a>|
 <a href="/log/project/${project.id}/id/${ec.uuid}/result">Result File</a><br/>
-<a href="/log/project/${project.id}/id/${ec.uuid}/error">Error Console</a><br/>
+<a href="/log/project/${project.id}/id/${ec.uuid}/error">Error Console</a>|
 <a href="/log/project/${project.id}/id/${ec.uuid}/input">Input File</a><br/>
-<a href="/log/project/${project.id}/id/${ec.uuid}/output">Console outputs</a><br/>
+<a href="/log/project/${project.id}/id/${ec.uuid}/output">Console outputs</a>|
 <a href="/log/project/${project.id}/id/${ec.uuid}/commandline">Command Line</a><br/>
 <br/>
 </div>
@@ -55,35 +55,5 @@ Time Finished: ${ec.timeEnded}<br/>
 </c:forEach>
 <br/>
 <hr/>
-<h5>List of Executors</h5>
-<ol>
-<c:forEach var="executor" items="${project.executionContexts}">
-<li>
-${executor.name} (${executor.status})<br/>
-<a href="/log/view?id=${executor.id}&type=result">Result File</a><br/>
-<a href="/log/view?id=${executor.id}&type=error">Error Console</a><br/>
-<a href="/log/view?id=${executor.id}&type=input">Input File</a><br/>
-<a href="/log/view?id=${executor.id}&type=output">Console outputs</a><br/>
-<a href="/log/view?id=${executor.id}&type=commandline">Command Line</a><br/>
-<a href="/log/download?id=${executor.id}">Download Results</a><br/>
-<br/>
-
-
-<a href="/executor/get?project_id=${project.id}&ec_id=${executor.id}">View</a> |
-<a href="/project/remove_executor?project_id=${project.id}&ec_id=${executor.id}">Remove</a> |
-<a href="/executor/execute?project_id=${project.id}&ec_id=${executor.id}">Execute</a> |
-<br/>
-</li>
-</c:forEach>
-</ol>
-
-
-</div>
-<br/>
-<br/>
-
-<div>
-
-
 </div>
 

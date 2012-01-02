@@ -11,6 +11,9 @@
 <div class="separator"></div>
 
 <ul class="glassList">
+	<li>
+        <a href="<c:url value='/project/list'/>"><fmt:message key="menu.project.existing"/></a>
+    </li>
     <li>
         <a href="<c:url value='/projectform?method=Add'/>"><fmt:message key="menu.project.new"/></a>
     </li>
