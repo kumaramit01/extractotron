@@ -142,8 +142,16 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
 
 	public Set<Project> getProjectsCurrentUser() {
 		Authentication authn =SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authn.getPrincipal();
-		User user1=getUserByUsername(user.getUsername());
+		String username="";
+		if(authn.getPrincipal() instanceof String){
+			username = authn.getPrincipal().toString();
+		}else if(authn.getPrincipal() instanceof User){
+			User user = (User) authn.getPrincipal();
+			username = user.getUsername();
+		}else{
+			throw new RuntimeException("Error getting principal : " + authn.getPrincipal());
+		}
+		User user1=getUserByUsername(username);
 		return user1.getProjects();
 	}
 

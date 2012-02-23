@@ -52,7 +52,7 @@ public class ExecutionContext extends BaseObject implements Serializable {
 		return id;
 	}
 
-	@Column(nullable = false, unique = false, columnDefinition = " varchar(16) default 'CREATED' ")
+	@Column(nullable = false, unique = false, columnDefinition = " varchar(64) default 'CREATED' ")
 	@SearchableProperty
 	public String getStatus() {
 		return status;

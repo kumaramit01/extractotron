@@ -1,5 +1,6 @@
 package org.imirsel.extractotron.webapp.controller;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -109,7 +110,8 @@ public class ProjectController {
 	
 
 	@RequestMapping(method = RequestMethod.GET, value="/execute")
-	public ModelAndView execute(@RequestParam(required = true, value = "id") String project_id,
+	public ModelAndView execute(@RequestParam(required = true, value = "project_id") String project_id,
+			@RequestParam(required=true, value="id") String execution_id,
 			HttpServletRequest request) throws Exception {
 	
 		// validate the commandline -make sure the ${feature} is selected
@@ -125,6 +127,9 @@ public class ProjectController {
 		// create a workspace directory -create an input file with the list of songs
 		Workspace workspace=workspaceManager.getWorkspaceForProject(project.getId(), uid.toString());
 	
+		// move this to the  workspacemanager
+		File file = new File(workspace.getDirectory(),project.getFeature());
+		file.mkdir();
 		
 		if(commandLine.contains("${feature}")){
 			// error

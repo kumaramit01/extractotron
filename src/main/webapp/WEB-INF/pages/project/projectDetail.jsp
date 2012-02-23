@@ -35,7 +35,7 @@
 <h5>List of Extractors</h5>
 <c:forEach var="extractor" items="${project.extractors}">
 ${extractor.name}
-(<a href="/project/execute?id=${extractor.id}">Click To Execute</a>) 
+(<a href="/project/execute?id=${extractor.id}&project_id=${project.id}">Click To Execute</a>) 
 <br/>
 </c:forEach>
 <br/>
